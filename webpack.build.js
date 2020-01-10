@@ -36,7 +36,12 @@ module.exports = {
   plugins: [
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
-      'process.env.HEAD_COMMIT': JSON.stringify(process.env.HEAD_COMMIT)
+      'process.env.HEAD_COMMIT': JSON.stringify(process.env.HEAD_COMMIT),
+      'process.env. PANOPTES_API_HOST': JSON.stringify(process.env. PANOPTES_API_HOST),
+      'process.env. PANOPTES_API_APPLICATION': JSON.stringify(process.env. PANOPTES_API_APPLICATION),
+      'process.env. TALK_HOST': JSON.stringify(process.env. TALK_HOST),
+      'process.env. SUGAR_HOST': JSON.stringify(process.env. SUGAR_HOST),
+      'process.env. STAT_HOST': JSON.stringify(process.env. STAT_HOST)
     }),
     new CopyWebpackPlugin([
       { from: 'public', to: '.' },
