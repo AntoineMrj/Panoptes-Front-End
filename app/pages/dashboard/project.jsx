@@ -1,21 +1,23 @@
-import React, {Component} from 'react'
+import React, {useState, useEffect} from 'react'
+import DashboardTable from 'DashboardTable'
 
-class DashboardProjectPage extends Component {
-    constructor() {
-        super()
-        this.state={}
-    }
+function DashboardProjectPage() {
 
-    render() {
-        return (
-            <div>
-                <ul>
-                    <li><a href="/dashboard">Général</a></li>
-                </ul>
-                Page projets
-            </div>
-        )
-    }
+    const [test] = useState('props test')
+
+    return (
+        <div>
+            <ul>
+                <li><a href="/dashboard">Général</a></li>
+            </ul>
+            <p>Projects page</p>
+
+            <DashboardTable
+                prop={test}
+            />
+
+        </div>
+    )
 }
 
 export default DashboardProjectPage
