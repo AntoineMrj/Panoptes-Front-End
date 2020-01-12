@@ -46,6 +46,10 @@ class DashboardPage extends Component{
             "loading ..."
         return(
             <div>
+                <ul>
+                    <li><a href="/dashboard/users">Users</a></li>
+                    <li><a href="/dashboard/project">Projet</a></li>
+                </ul>
                 <h1>Liste des projets</h1>
                 <ul>
                     {projects}
