@@ -1,21 +1,13 @@
-import React, {Component} from 'react'
+import React from 'react';
 
-class DashboardProjectPage extends Component {
-    constructor() {
-        super()
-        this.state={}
-    }
-
-    render() {
-        return (
-            <div>
-                <ul>
-                    <li><a href="/dashboard">Général</a></li>
-                </ul>
-                Page projets
-            </div>
-        )
-    }
+class DashboardPageProject extends React.Component {
+  render() {
+    return (
+      <div>
+        Ceci est la page Project
+      </div>
+    );
+  }
 }
 
-export default DashboardProjectPage
+export default DashboardPageProject;

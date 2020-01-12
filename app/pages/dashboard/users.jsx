@@ -1,21 +1,13 @@
-import React, {Component} from 'react'
+import React from 'react';
 
-class DashboardUsersPage extends Component {
-    constructor() {
-        super()
-        this.state={}
-    }
-
-    render() {
-        return (
-            <div>
-                <ul>
-                    <li><a href="/dashboard">Général</a></li>
-                </ul>
-                Page utilisateurs
-            </div>
-        )
-    }
+class DashboardPageUsers extends React.Component {
+  render() {
+    return (
+      <div>
+        Ceci est la page Users
+      </div>
+    );
+  }
 }
 
-export default DashboardUsersPage
+export default DashboardPageUsers;
