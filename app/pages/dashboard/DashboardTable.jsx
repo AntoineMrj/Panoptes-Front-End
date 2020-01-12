@@ -43,7 +43,7 @@ const columns = [
 
 function createData(user, sub_task1, sub_task2, sub_task3) {
     const task_score = (sub_task1 + sub_task2 + sub_task3) / 3;
-    return { name, code, population, size, task_score };
+    return { user, sub_task1, sub_task2, sub_task3, task_score };
 }
 
 const rows = [

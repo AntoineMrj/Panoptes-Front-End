@@ -5,7 +5,8 @@ import DashboardTable from 'DashboardTable'
 function DashboardPageProject() {
     return (
         <div>
-        Ceci est la page Project
+            <p>Ceci est la page Project</p>
+            <DashboardTable />
         </div>
     );
 }
