@@ -1,23 +1,13 @@
+
 import React, {useState, useEffect} from 'react'
 import DashboardTable from 'DashboardTable'
 
-function DashboardProjectPage() {
-
-    const [test] = useState('props test')
-
+function DashboardPageProject() {
     return (
         <div>
-            <ul>
-                <li><a href="/dashboard">Général</a></li>
-            </ul>
-            <p>Projects page</p>
-
-            <DashboardTable
-                prop={test}
-            />
-
+        Ceci est la page Project
         </div>
-    )
+    );
 }
 
-export default DashboardProjectPage
+export default DashboardPageProject;

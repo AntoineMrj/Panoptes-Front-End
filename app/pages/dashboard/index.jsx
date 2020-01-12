@@ -1,66 +1,76 @@
-import React, {Component} from 'react'
-import apiClient from 'panoptes-client/lib/api-client';
+import PropTypes from 'prop-types';
+import React from 'react';
+import counterpart from 'counterpart';
+import Translate from 'react-translate-component';
+import { Helmet } from 'react-helmet';
+import { Link, IndexLink } from 'react-router';
 
-class DashboardPage extends Component{
-    constructor(props) {
-        super(props)
-        this.state={
-            loaded: false,
-            projects: []
-        }
+class DashboardPage extends React.Component {
+  componentWillReceiveProps(nextProps, nextContext) {
+    this.logClick = !!nextContext &&
+      !!nextContext.geordi &&
+      !!nextContext.geordi.makeHandler &&
+      nextContext.geordi.makeHandler('about-menu');
+  }
 
-        this.loadProjects = this.loadProjects.bind(this)
-    }
-
-    componentDidMount() {
-      this.loadProjects()
-    }
-
-    loadProjects() {
-        const query = {
-            tags: undefined,
-            sort: "-launch_date",
-            launch_approved: true,
-            cards: true,
-            include: ['avatar'],
-            state: 'live',
-            page_size: undefined,
-        }
-
-        apiClient.type('projects').get(query)
-            .then((projects) => {
-                if (projects.length > 0) {
-                  this.setState({ projects })
-                  this.setState({ loaded: true })
-                } else {
-                  this.setState({ projects: []});
-                }
-            })
-    }
-
-    render() {
-        // console.log(this.state.projects[0])
-        //si les données ont été chargée on créé un <li> par projet avec comme clef son id et comme contenu son nom
-        const projects = this.state.loaded ?
-            this.state.projects.map(project => <li key={project.id}>{project.display_name}</li>) :
-            "loading ..."
-        return(
-            <div>
-                <ul>
-                    <li><a href="/dashboard/users">Users</a></li>
-                    <li><a href="/dashboard/project">Projet</a></li>
-                </ul>
-                <h1>Liste des projets</h1>
-                <ul>
-                    {projects}
-                </ul>
-            </div>
-        )
-    }
+  render() {
+      // TODO : changer les className et ajouter notre propre style
+    return (
+      <div className="secondary-page get-involved-page">
+        <Helmet title="Dashboard" />
+        <section className="hero">
+          <div className="hero-container">
+            <h1>Dashboard</h1>
+            <nav className="hero-nav">
+              <ul>
+                <li>
+                  <IndexLink
+                    to="/dashboard"
+                    activeClassName="active"
+                  >
+                    Général
+                  </IndexLink>
+                </li>
+                <li>
+                  <Link
+                    to="/dashboard/users"
+                    activeClassName="active"
+                    onClick={this.logClick ? this.logClick.bind(this, 'getInvolved.index.nav.education') : null}
+                  >
+                    Users
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/dashboard/project"
+                    activeClassName="active"
+                    onClick={this.logClick ? this.logClick.bind(this, 'getInvolved.index.nav.callForProjects') : null}
+                  >
+                    Project
+                  </Link>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </section>
+        <section className="get-involved-page-content content-container">
+          {this.props.children}
+        </section>
+      </div>
+    );
+  }
 }
 
-/*
-    Créer une liste de projets avec leur nombre de classification à côté
-*/
+DashboardPage.contextTypes = {
+  geordi: PropTypes.object
+};
 
-export default DashboardPage
+DashboardPage.propTypes = {
+  children: PropTypes.node
+};
+
+DashboardPage.defaultProps = {
+  children: null
+};
+
+export default DashboardPage;
