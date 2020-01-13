@@ -1,6 +1,6 @@
-
 import React, {useState, useEffect} from 'react'
 import DashboardTable from 'DashboardTable'
+import ProjectInfo from 'ProjectInfo'
 
 function createData(user, sub_task1, sub_task2, sub_task3) {
     const task_score = (sub_task1 + sub_task2 + sub_task3) / 3;
@@ -57,10 +57,18 @@ const columns = [
     }
 ];
 
+const projectInfo = {
+    meanTime: 10,
+    feltDifficulty: 3.2,
+    meanGSscore: 6.8
+}
+
 function DashboardPageProject() {
     return (
         <div>
-            <p>This is the project page</p>
+            <ProjectInfo
+                projectInfo = {projectInfo}
+            />
             <DashboardTable
                 rows = {rows}
                 columns = {columns}
