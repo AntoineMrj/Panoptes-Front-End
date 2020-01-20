@@ -1,0 +1,709 @@
+[
+  {
+    "workflow_id": 3386,
+    "display_name": "Transcription de date",
+    "version": 1,
+    "active": true,
+    "classifications_count": 0,
+    "pairwise": false,
+    "grouped": false,
+    "prioritized": false,
+    "primary_language": "en",
+    "first_task": "",
+    "tutorial_subject_id": "",
+    "retired_set_member_subjects_count": 0,
+    "tasks": {},
+    "retirement": {
+      "criteria": "classification_count",
+      "options": {
+        "count": 15
+      }
+    },
+    "aggregation": {},
+    "strings": {},
+    "minor_version": 1
+  },
+  {
+    "workflow_id": 3386,
+    "display_name": "Transcription de date",
+    "version": 2,
+    "active": true,
+    "classifications_count": 0,
+    "pairwise": false,
+    "grouped": false,
+    "prioritized": false,
+    "primary_language": "en",
+    "first_task": "T0",
+    "tutorial_subject_id": "",
+    "retired_set_member_subjects_count": 0,
+    "tasks": {
+      "T0": {
+        "help": "T0.help",
+        "type": "single",
+        "answers": [],
+        "question": "T0.question"
+      }
+    },
+    "retirement": {
+      "criteria": "classification_count",
+      "options": {
+        "count": 15
+      }
+    },
+    "aggregation": {},
+    "strings": {
+      "T0.help": "",
+      "T0.question": "Y-a-t-il une "
+    },
+    "minor_version": 2
+  },
+  {
+    "workflow_id": 3386,
+    "display_name": "Transcription de date",
+    "version": 2,
+    "active": true,
+    "classifications_count": 0,
+    "pairwise": false,
+    "grouped": false,
+    "prioritized": false,
+    "primary_language": "en",
+    "first_task": "T0",
+    "tutorial_subject_id": "",
+    "retired_set_member_subjects_count": 0,
+    "tasks": {
+      "T0": {
+        "help": "T0.help",
+        "type": "single",
+        "answers": [],
+        "question": "T0.question"
+      }
+    },
+    "retirement": {
+      "criteria": "classification_count",
+      "options": {
+        "count": 15
+      }
+    },
+    "aggregation": {},
+    "strings": {
+      "T0.help": "",
+      "T0.question": "Y a-t-il une date sur l'image ?"
+    },
+    "minor_version": 3
+  },
+  {
+    "workflow_id": 3386,
+    "display_name": "Transcription de date",
+    "version": 3,
+    "active": true,
+    "classifications_count": 0,
+    "pairwise": false,
+    "grouped": false,
+    "prioritized": false,
+    "primary_language": "en",
+    "first_task": "T0",
+    "tutorial_subject_id": "",
+    "retired_set_member_subjects_count": 0,
+    "tasks": {
+      "T0": {
+        "help": "T0.help",
+        "type": "single",
+        "answers": [
+          {
+            "label": "T0.answers.0.label"
+          }
+        ],
+        "question": "T0.question"
+      }
+    },
+    "retirement": {
+      "criteria": "classification_count",
+      "options": {
+        "count": 15
+      }
+    },
+    "aggregation": {},
+    "strings": {
+      "T0.help": "",
+      "T0.question": "Y a-t-il une date sur l'image ?",
+      "T0.answers.0.label": "Enter an answer"
+    },
+    "minor_version": 4
+  },
+  {
+    "workflow_id": 3386,
+    "display_name": "Transcription de date",
+    "version": 3,
+    "active": true,
+    "classifications_count": 0,
+    "pairwise": false,
+    "grouped": false,
+    "prioritized": false,
+    "primary_language": "en",
+    "first_task": "T0",
+    "tutorial_subject_id": "",
+    "retired_set_member_subjects_count": 0,
+    "tasks": {
+      "T0": {
+        "help": "T0.help",
+        "type": "single",
+        "answers": [
+          {
+            "label": "T0.answers.0.label"
+          }
+        ],
+        "question": "T0.question"
+      }
+    },
+    "retirement": {
+      "criteria": "classification_count",
+      "options": {
+        "count": 15
+      }
+    },
+    "aggregation": {},
+    "strings": {
+      "T0.help": "",
+      "T0.question": "Y a-t-il une date sur l'image ?",
+      "T0.answers.0.label": "Oui"
+    },
+    "minor_version": 5
+  },
+  {
+    "workflow_id": 3386,
+    "display_name": "Transcription de date",
+    "version": 4,
+    "active": true,
+    "classifications_count": 0,
+    "pairwise": false,
+    "grouped": false,
+    "prioritized": false,
+    "primary_language": "en",
+    "first_task": "T0",
+    "tutorial_subject_id": "",
+    "retired_set_member_subjects_count": 0,
+    "tasks": {
+      "T0": {
+        "help": "T0.help",
+        "type": "single",
+        "answers": [
+          {
+            "label": "T0.answers.0.label"
+          },
+          {
+            "label": "T0.answers.1.label"
+          }
+        ],
+        "question": "T0.question"
+      }
+    },
+    "retirement": {
+      "criteria": "classification_count",
+      "options": {
+        "count": 15
+      }
+    },
+    "aggregation": {},
+    "strings": {
+      "T0.help": "",
+      "T0.question": "Y a-t-il une date sur l'image ?",
+      "T0.answers.0.label": "Oui",
+      "T0.answers.1.label": "Enter an answer"
+    },
+    "minor_version": 6
+  },
+  {
+    "workflow_id": 3386,
+    "display_name": "Transcription de date",
+    "version": 5,
+    "active": true,
+    "classifications_count": 0,
+    "pairwise": false,
+    "grouped": false,
+    "prioritized": false,
+    "primary_language": "en",
+    "first_task": "T0",
+    "tutorial_subject_id": "",
+    "retired_set_member_subjects_count": 0,
+    "tasks": {
+      "T0": {
+        "help": "T0.help",
+        "type": "single",
+        "answers": [
+          {
+            "label": "T0.answers.0.label"
+          },
+          {
+            "label": "T0.answers.1.label"
+          }
+        ],
+        "question": "T0.question"
+      },
+      "T1": {
+        "help": "T1.help",
+        "type": "drawing",
+        "tools": [],
+        "instruction": "T1.instruction"
+      }
+    },
+    "retirement": {
+      "criteria": "classification_count",
+      "options": {
+        "count": 15
+      }
+    },
+    "aggregation": {},
+    "strings": {
+      "T0.help": "",
+      "T1.help": "",
+      "T0.question": "Y a-t-il une date sur l'image ?",
+      "T1.instruction": "Entourer la date",
+      "T0.answers.0.label": "Oui",
+      "T0.answers.1.label": "Non"
+    },
+    "minor_version": 7
+  },
+  {
+    "workflow_id": 3386,
+    "display_name": "Transcription de date",
+    "version": 6,
+    "active": true,
+    "classifications_count": 0,
+    "pairwise": false,
+    "grouped": false,
+    "prioritized": false,
+    "primary_language": "en",
+    "first_task": "T0",
+    "tutorial_subject_id": "",
+    "retired_set_member_subjects_count": 0,
+    "tasks": {
+      "T0": {
+        "help": "T0.help",
+        "type": "single",
+        "answers": [
+          {
+            "label": "T0.answers.0.label"
+          },
+          {
+            "label": "T0.answers.1.label"
+          }
+        ],
+        "question": "T0.question"
+      },
+      "T1": {
+        "help": "T1.help",
+        "type": "drawing",
+        "tools": [
+          {
+            "type": "point",
+            "color": "#00ff00",
+            "label": "T1.tools.0.label",
+            "details": []
+          }
+        ],
+        "instruction": "T1.instruction"
+      }
+    },
+    "retirement": {
+      "criteria": "classification_count",
+      "options": {
+        "count": 15
+      }
+    },
+    "aggregation": {},
+    "strings": {
+      "T0.help": "",
+      "T1.help": "",
+      "T0.question": "Y a-t-il une date sur l'image ?",
+      "T1.instruction": "Entourer la date",
+      "T1.tools.0.label": "Tool name",
+      "T0.answers.0.label": "Oui",
+      "T0.answers.1.label": "Non"
+    },
+    "minor_version": 8
+  },
+  {
+    "workflow_id": 3386,
+    "display_name": "Transcription de date",
+    "version": 6,
+    "active": true,
+    "classifications_count": 0,
+    "pairwise": false,
+    "grouped": false,
+    "prioritized": false,
+    "primary_language": "en",
+    "first_task": "T0",
+    "tutorial_subject_id": "",
+    "retired_set_member_subjects_count": 0,
+    "tasks": {
+      "T0": {
+        "help": "T0.help",
+        "type": "single",
+        "answers": [
+          {
+            "label": "T0.answers.0.label"
+          },
+          {
+            "label": "T0.answers.1.label"
+          }
+        ],
+        "question": "T0.question"
+      },
+      "T1": {
+        "help": "T1.help",
+        "type": "drawing",
+        "tools": [
+          {
+            "type": "point",
+            "color": "#00ff00",
+            "label": "T1.tools.0.label",
+            "details": []
+          }
+        ],
+        "instruction": "T1.instruction"
+      }
+    },
+    "retirement": {
+      "criteria": "classification_count",
+      "options": {
+        "count": 15
+      }
+    },
+    "aggregation": {},
+    "strings": {
+      "T0.help": "",
+      "T1.help": "",
+      "T0.question": "Y a-t-il une date sur l'image ?",
+      "T1.instruction": "Entourer la date",
+      "T1.tools.0.label": "Outil dessin",
+      "T0.answers.0.label": "Oui",
+      "T0.answers.1.label": "Non"
+    },
+    "minor_version": 9
+  },
+  {
+    "workflow_id": 3386,
+    "display_name": "Transcription de date",
+    "version": 7,
+    "active": true,
+    "classifications_count": 0,
+    "pairwise": false,
+    "grouped": false,
+    "prioritized": false,
+    "primary_language": "en",
+    "first_task": "T0",
+    "tutorial_subject_id": "",
+    "retired_set_member_subjects_count": 0,
+    "tasks": {
+      "T0": {
+        "help": "T0.help",
+        "type": "single",
+        "answers": [
+          {
+            "label": "T0.answers.0.label"
+          },
+          {
+            "label": "T0.answers.1.label"
+          }
+        ],
+        "question": "T0.question"
+      },
+      "T1": {
+        "help": "T1.help",
+        "type": "drawing",
+        "tools": [
+          {
+            "type": "rectangle",
+            "color": "#00ff00",
+            "label": "T1.tools.0.label",
+            "details": []
+          }
+        ],
+        "instruction": "T1.instruction"
+      }
+    },
+    "retirement": {
+      "criteria": "classification_count",
+      "options": {
+        "count": 15
+      }
+    },
+    "aggregation": {},
+    "strings": {
+      "T0.help": "",
+      "T1.help": "",
+      "T0.question": "Y a-t-il une date sur l'image ?",
+      "T1.instruction": "Entourer la date",
+      "T1.tools.0.label": "Outil dessin",
+      "T0.answers.0.label": "Oui",
+      "T0.answers.1.label": "Non"
+    },
+    "minor_version": 9
+  },
+  {
+    "workflow_id": 3386,
+    "display_name": "Transcription de date",
+    "version": 8,
+    "active": true,
+    "classifications_count": 0,
+    "pairwise": false,
+    "grouped": false,
+    "prioritized": false,
+    "primary_language": "en",
+    "first_task": "T0",
+    "tutorial_subject_id": "",
+    "retired_set_member_subjects_count": 0,
+    "tasks": {
+      "T0": {
+        "help": "T0.help",
+        "type": "single",
+        "answers": [
+          {
+            "next": "T1",
+            "label": "T0.answers.0.label"
+          },
+          {
+            "label": "T0.answers.1.label"
+          }
+        ],
+        "question": "T0.question"
+      },
+      "T1": {
+        "help": "T1.help",
+        "type": "drawing",
+        "tools": [
+          {
+            "type": "rectangle",
+            "color": "#00ff00",
+            "label": "T1.tools.0.label",
+            "details": []
+          }
+        ],
+        "instruction": "T1.instruction"
+      }
+    },
+    "retirement": {
+      "criteria": "classification_count",
+      "options": {
+        "count": 15
+      }
+    },
+    "aggregation": {},
+    "strings": {
+      "T0.help": "",
+      "T1.help": "",
+      "T0.question": "Y a-t-il une date sur l'image ?",
+      "T1.instruction": "Entourer la date",
+      "T1.tools.0.label": "Outil dessin",
+      "T0.answers.0.label": "Oui",
+      "T0.answers.1.label": "Non"
+    },
+    "minor_version": 9
+  },
+  {
+    "workflow_id": 3386,
+    "display_name": "Transcription de date",
+    "version": 9,
+    "active": true,
+    "classifications_count": 0,
+    "pairwise": false,
+    "grouped": false,
+    "prioritized": false,
+    "primary_language": "en",
+    "first_task": "T0",
+    "tutorial_subject_id": "",
+    "retired_set_member_subjects_count": 0,
+    "tasks": {
+      "T0": {
+        "help": "T0.help",
+        "type": "single",
+        "answers": [
+          {
+            "next": "T1",
+            "label": "T0.answers.0.label"
+          },
+          {
+            "label": "T0.answers.1.label"
+          }
+        ],
+        "question": "T0.question"
+      },
+      "T1": {
+        "help": "T1.help",
+        "type": "drawing",
+        "tools": [
+          {
+            "type": "rectangle",
+            "color": "#00ff00",
+            "label": "T1.tools.0.label",
+            "details": []
+          }
+        ],
+        "instruction": "T1.instruction"
+      },
+      "T2": {
+        "help": "T2.help",
+        "type": "text",
+        "required": false,
+        "instruction": "T2.instruction"
+      }
+    },
+    "retirement": {
+      "criteria": "classification_count",
+      "options": {
+        "count": 15
+      }
+    },
+    "aggregation": {},
+    "strings": {
+      "T0.help": "",
+      "T1.help": "",
+      "T2.help": "",
+      "T0.question": "Y a-t-il une date sur l'image ?",
+      "T1.instruction": "Entourer la date",
+      "T2.instruction": "Saisissez la date au format JJ/MM/AAAA",
+      "T1.tools.0.label": "Outil dessin",
+      "T0.answers.0.label": "Oui",
+      "T0.answers.1.label": "Non"
+    },
+    "minor_version": 10
+  },
+  {
+    "workflow_id": 3386,
+    "display_name": "Transcription de date",
+    "version": 10,
+    "active": true,
+    "classifications_count": 0,
+    "pairwise": false,
+    "grouped": false,
+    "prioritized": false,
+    "primary_language": "en",
+    "first_task": "T0",
+    "tutorial_subject_id": "",
+    "retired_set_member_subjects_count": 0,
+    "tasks": {
+      "T0": {
+        "help": "T0.help",
+        "type": "single",
+        "answers": [
+          {
+            "next": "T1",
+            "label": "T0.answers.0.label"
+          },
+          {
+            "label": "T0.answers.1.label"
+          }
+        ],
+        "question": "T0.question"
+      },
+      "T1": {
+        "help": "T1.help",
+        "next": "T2",
+        "type": "drawing",
+        "tools": [
+          {
+            "type": "rectangle",
+            "color": "#00ff00",
+            "label": "T1.tools.0.label",
+            "details": []
+          }
+        ],
+        "instruction": "T1.instruction"
+      },
+      "T2": {
+        "help": "T2.help",
+        "type": "text",
+        "required": false,
+        "instruction": "T2.instruction"
+      }
+    },
+    "retirement": {
+      "criteria": "classification_count",
+      "options": {
+        "count": 15
+      }
+    },
+    "aggregation": {},
+    "strings": {
+      "T0.help": "",
+      "T1.help": "",
+      "T2.help": "",
+      "T0.question": "Y a-t-il une date sur l'image ?",
+      "T1.instruction": "Entourer la date",
+      "T2.instruction": "Saisissez la date au format JJ/MM/AAAA",
+      "T1.tools.0.label": "Outil dessin",
+      "T0.answers.0.label": "Oui",
+      "T0.answers.1.label": "Non"
+    },
+    "minor_version": 10
+  },
+  {
+    "workflow_id": 3387,
+    "display_name": "Transcription de date v2",
+    "version": 0,
+    "active": true,
+    "classifications_count": 0,
+    "pairwise": false,
+    "grouped": false,
+    "prioritized": false,
+    "primary_language": "en",
+    "first_task": "T0",
+    "tutorial_subject_id": "",
+    "retired_set_member_subjects_count": 0,
+    "tasks": {
+      "T0": {
+        "help": "T0.help",
+        "type": "single",
+        "answers": [
+          {
+            "next": "T1",
+            "label": "T0.answers.0.label"
+          },
+          {
+            "label": "T0.answers.1.label"
+          }
+        ],
+        "question": "T0.question"
+      },
+      "T1": {
+        "help": "T1.help",
+        "next": "T2",
+        "type": "drawing",
+        "tools": [
+          {
+            "type": "rectangle",
+            "color": "#00ff00",
+            "label": "T1.tools.0.label",
+            "details": []
+          }
+        ],
+        "instruction": "T1.instruction"
+      },
+      "T2": {
+        "help": "T2.help",
+        "type": "text",
+        "required": false,
+        "instruction": "T2.instruction"
+      }
+    },
+    "retirement": {
+      "criteria": "classification_count",
+      "options": {
+        "count": 15
+      }
+    },
+    "aggregation": {},
+    "strings": {
+      "T0.help": "",
+      "T1.help": "",
+      "T2.help": "",
+      "T0.question": "Y a-t-il une date sur l'image ?",
+      "T1.instruction": "Entourer la date",
+      "T2.instruction": "Saisissez la date au format JJ/MM/AAAA",
+      "T1.tools.0.label": "Outil dessin",
+      "T0.answers.0.label": "Oui",
+      "T0.answers.1.label": "Non"
+    },
+    "minor_version": 0
+  }
+]
