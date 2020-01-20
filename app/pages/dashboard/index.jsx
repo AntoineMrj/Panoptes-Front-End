@@ -6,11 +6,21 @@ import { Helmet } from 'react-helmet';
 import { Link, IndexLink } from 'react-router';
 
 class DashboardPage extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      current:"/dashboard"
+    }
+  }
+
   componentWillReceiveProps(nextProps, nextContext) {
     this.logClick = !!nextContext &&
       !!nextContext.geordi &&
       !!nextContext.geordi.makeHandler &&
       nextContext.geordi.makeHandler('about-menu');
+      this.setState({
+        current : nextProps.location.pathname
+      })
   }
 
   render() {
@@ -35,20 +45,22 @@ class DashboardPage extends React.Component {
                   <Link
                     to="/dashboard/users"
                     activeClassName="active"
-                    onClick={this.logClick ? this.logClick.bind(this, 'getInvolved.index.nav.education') : null}
+                    onClick={this.logClick ? this.logClick.bind(this, 'test') : null}
                   >
                     Users
                   </Link>
                 </li>
-                <li>
-                  <Link
-                    to="/dashboard/project"
-                    activeClassName="active"
-                    onClick={this.logClick ? this.logClick.bind(this, 'getInvolved.index.nav.callForProjects') : null}
-                  >
-                    Project
-                  </Link>
-                </li>
+                {this.state.current == '/dashboard' || this.state.current == '/dashboard/users' ? null :
+                  <li>
+                    <Link
+                      to="/dashboard/project"
+                      activeClassName="active"
+                      onClick={this.logClick ? this.logClick.bind(this, 'getInvolved.index.nav.callForProjects') : null}
+                    >
+                      Project
+                    </Link>
+                  </li>
+                }
               </ul>
             </nav>
           </div>

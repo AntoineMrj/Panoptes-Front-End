@@ -63,7 +63,8 @@ const projectInfo = {
     meanGSscore: 6.8
 }
 
-function DashboardPageProject() {
+function DashboardPageProject(props) {
+    console.log('PARAM : ' + props.params.id)
     return (
         <div>
             <ProjectInfo

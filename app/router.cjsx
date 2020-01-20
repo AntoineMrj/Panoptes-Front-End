@@ -297,7 +297,7 @@ module.exports =
     <Route path="dashboard" component={DashboardPage}>
         <IndexRoute component={DashboardPageGeneral} />
         <Route path="users" component={DashboardPageUsers} />
-        <Route path="project" component={DashboardPageProject} />
+        <Route path="project/:id" component={DashboardPageProject} />
     </Route>
 
 =

@@ -1,19 +1,18 @@
 import React from 'react';
 import apiClient from 'panoptes-client/lib/api-client';
+import { Link, IndexLink } from 'react-router';
+import ProjectList from './ProjectList'
 
 class DashboardPageGeneral extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state={
-            loaded: false,
-            projects: []
-        }
-
-        this.loadProjects = this.loadProjects.bind(this)
+    state={
+        loaded: false,
+        projects: []
     }
 
     componentDidMount() {
       this.loadProjects()
+      //this.getMyProject()
+      //this.getAllUsers()
     }
 
     loadProjects() {
@@ -24,7 +23,7 @@ class DashboardPageGeneral extends React.Component {
             cards: true,
             include: ['avatar'],
             state: 'live',
-            page_size: undefined,
+            page_size: 10000,
         }
 
         apiClient.type('projects').get(query)
@@ -38,18 +37,39 @@ class DashboardPageGeneral extends React.Component {
             })
     }
 
+/*    getMyProject() {
+      apiClient.type('subjects').get('1899')
+        .then(function (subject) {
+            console.log('project 1:' + subject);
+        });
+
+      apiClient.type('projects').get( {id: '433' })
+          .then((projects) => {
+            console.log('project : ' + projects)
+          })
+    }
+*/
+
+    getAllUsers() {
+
+      const query = {
+        page_size: 100
+      }
+
+
+      apiClient.type('users').get(query)
+        .then((users) => {
+          console.log(users)
+        })
+    }
+
 
   render() {
-      // console.log(this.state.projects[0])
-      //si les données ont été chargée on créé un <li> par projet avec comme clef son id et comme contenu son nom
-      const projects = this.state.loaded ?
-          this.state.projects.map(project => <li key={project.id}>{project.display_name}</li>) :
-          "loading ..."
+    const projects = this.state.loaded ? <ProjectList projects={this.state.projects} /> : "loading ..."
     return (
       <div>
-        Ceci est la page général
-
         <h1>Liste des projets</h1>
+        <p> Sélectionner un projet pour accéder à ses statistiques : </p>
         <ul>
             {projects}
         </ul>
