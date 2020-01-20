@@ -12,7 +12,7 @@ function createData(user, sub_task1, sub_task2, sub_task3) {
     return { user, sub_task1, sub_task2, sub_task3, task_score };
 }
 
-const rows = [
+const rows_example = [
     createData('Jean', 7, 8.5, 5.6),
     createData('Paul', 7, 8.5, 5.6),
     createData('Pena', 7, 8.5, 5.6),
@@ -30,7 +30,7 @@ const rows = [
     createData('Lola', 7, 8.5, 5.6),
 ];
 
-const columns = [
+const columns_example = [
     { id: 'user', label: 'User', minWidth: 100 },
     {
         id: 'sub_task1',
@@ -77,17 +77,32 @@ function getClassifications() {
     })
 }
 
-export default function DashboardPageProject(props) {
+const initialTableState = {
+    columns: [{ id: 'user', label: 'User', minWidth: 100 }],
+    rows: []
+}
 
-    console.log('PARAM : ' + props.params.id)
+export default function DashboardPageProject(props) {
 
     const [workflows, setWorkflows] = useState()
     const [isLoaded, setIsLoaded] = useState(false)
+    const [currentWorkflow, setCurrentWorkflow] = useState()
+
+    const [columns, setColumns] = useState(initialTableState.columns)
+    const [rows, setRows] = useState(initialTableState.rows)
+
+    /*
+     * Reinit the columns and rows state
+     */
+    const clearTableState = () => {
+        setColumns(initialTableState.columns)
+        setRows(initialTableState.rows)
+    }
 
     /*
      * Getting highest version of each workflow and return them
      */
-    function getWorkflows() {
+    const getWorkflows = () => {
         console.log("getWorkflow")
         var version = {}
         var workflows = {}
@@ -105,28 +120,65 @@ export default function DashboardPageProject(props) {
         return Object.values(workflows)
     }
 
+    /*
+     * Loading the workflows of the current project
+     */
+    const loadWorkflows = () => {
+        const query = {
+            project_id: props.params.id
+        }
+
+        apiClient.type('workflows').get(query)
+            .then((workflows) => {
+                setWorkflows(workflows)
+                setIsLoaded(true)
+            })
+    }
+
     useEffect(() => {
-        setWorkflows(getWorkflows())
-        console.log("workflows: ", workflows)
+        //setWorkflows(getWorkflows())
+        loadWorkflows()
     }, [])
 
     useEffect(() => {
-        console.log("workflows: ", workflows)
-    }, [isLoaded])
+        if (isLoaded) {
+            clearTableState()
+            workflows.forEach(workflow => {
+                // We check the current workflow
+                if (workflow.id === currentWorkflow) {
+                    for (let task in workflow.tasks) {
+                        setColumns(prevColumns =>
+                            [...(prevColumns), {
+                                id: task,
+                                label: task,
+                                minWidth: 60,
+                                align: 'right',
+                                format: value => value.toLocaleString()
+                            }]
+                        )
+                        //setRows(task)
+                    }
+                }
+            })
+        }
+    }, [currentWorkflow])
+
+    const handleWorkflowClick = event => {
+        setCurrentWorkflow(event.target.name)
+    }
 
     const workflow_list = isLoaded ?
-        workflows.map(workflow => <li key={workflow.id}>workflow.display_name</li>) :
-        "loading ..."
+        workflows.map(workflow => <button onClick={handleWorkflowClick} name={workflow.id}>{workflow.display_name}</button>) :
+        "loading..."
 
     return (
         <div>
-            <ul>
-                {workflow_list}
-            </ul>
-            <p>{isLoaded ? Object.keys(workflows).length : "loading ..."}</p>
-            <ProjectInfo
-                projectInfo = {projectInfo}
-            />
+            <h3>Project {props.params.id}</h3>
+            <br/>
+            {workflow_list}
+            <br/>
+            <br/>
+
             <DashboardTable
                 rows = {rows}
                 columns = {columns}
