@@ -13,6 +13,7 @@ class DashboardPageGeneral extends React.Component {
       this.loadProjects()
       //this.getMyProject()
       //this.getAllUsers()
+      //this.getClassifications(604)
     }
 
     loadProjects() {
@@ -49,18 +50,28 @@ class DashboardPageGeneral extends React.Component {
           })
     }
 */
+    getClassifications(project_id) {
+      apiClient.type('classifications').get(1)
+          .then((classif) => {
+            console.log(classif)
+          })
+    }
 
     getAllUsers() {
 
       const query = {
-        page_size: 100
+        page: 132378, //=> 157245
+        page_size: 10, // 1326029
+        sort: '-login'
       }
+      //132378
+      //{ id: '1326029' }
+      //{ id: '1325316'} => {login: 'markb-panoptes' }
 
-
-      apiClient.type('users').get(query)
-        .then((users) => {
-          console.log(users)
-        })
+      apiClient.type('users').get({ id: '1326029' })
+        .then(function (users) {
+            console.log(users);
+        });
     }
 
 
