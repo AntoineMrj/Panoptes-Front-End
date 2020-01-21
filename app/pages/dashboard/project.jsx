@@ -170,10 +170,13 @@ export default function DashboardPageProject(props) {
 
     useEffect(() => {
         // Loading tasks of the first workflow
-        if (workflows !== undefined) {
-            setCurrentWorkflow(workflows[0].id)
-            retrieveTasks()
+        if(typeof workflows !== undefined){
+          if (workflows !== undefined) {
+              setCurrentWorkflow(workflows[0].id)
+              retrieveTasks()
+          }
         }
+
     }, [isLoaded])
 
     useEffect(() => {
