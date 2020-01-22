@@ -14,7 +14,17 @@ export default class FlexibleLink extends React.Component {
       return (<a className={this.props.className} href={this.props.to}>{this.props.children}</a>);
     }
 
-    return (<Link className={this.props.className} to={this.props.to} onClick={clickHandler.bind(this, this.props.logText)}>{this.props.children}</Link>);
+    return (<Link
+      className={this.props.className}
+      to={{
+        pathname: this.props.to,
+        state: {
+          project: this.props.project
+        }
+      }}
+      onClick={clickHandler.bind(this, this.props.logText)}>
+      {this.props.children}
+      </Link>);
   }
 }
 

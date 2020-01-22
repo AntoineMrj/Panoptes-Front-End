@@ -39,7 +39,7 @@ ProjectCard = createReactClass
     else
       '/projects/' + @props.project.slug
 
-    <FlexibleLink to={href}>
+    <FlexibleLink to={href} project={this.props.project} >
       <div className="project-card #{this.props.className}" ref="projectCard" style={conditionalStyle}>
         <svg viewBox="0 0 2 1" width="100%"></svg>
         <div className="details">
