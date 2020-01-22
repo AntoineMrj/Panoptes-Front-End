@@ -114,6 +114,8 @@ export default function DashboardPageProject(props) {
             project_id: props.params.id
         }
 
+        console.log(props.location.state)
+
         apiClient.type('classifications').get(query)
         .then((workflows) => {
             setWorkflows(workflows)

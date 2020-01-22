@@ -20,7 +20,7 @@ export function getProjects(query) {
 export function getClassifications(project_id) {
   return new Promise(function(resolve, reject) {
     resolve(
-      apiClient.type('classifications').get(1)
+      apiClient.type('classifications').get({project_id : project_id})
       .then((classifications) => {
         return classifications;
       })
