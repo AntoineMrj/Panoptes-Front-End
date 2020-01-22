@@ -17,7 +17,6 @@ export function getProjects(query) {
   })
 }
 
-
 /**
 * Fetch classifications for a given project
 * @param {integer} project_id Project id
@@ -44,4 +43,25 @@ export function getClassifications(project_id) {
 */
 export function diffTime(started_at, finished_at) {
   return Math.ceil(Math.abs(finished_at - started_at)/1000);
+}
+
+/**
+* Extract classifications related to a specific project from classifications
+* @param {object} classifications Object containing classifications
+* @param {integer} project_id     Id of the project to filter on
+* @return {object} Return the filtered classifications
+*/
+export function extractClassifications(classifications, project_id) {
+  return classifications.filter(classifications => classifications.links.project == project_id)
+}
+
+/**
+* Computes average time spent on classifications given a classification set
+* @param {object} classifications Object containing classifications
+* @return {number} Return the avegare time spent
+*/
+export function computeTimeAverage(classifications) {
+  return classifications
+  .map((classification) => diffTime(new Date(classification.metadata.started_at), new Date(classification.metadata.finished_at)))
+  .reduce((acc, curr) => acc + curr) / classifications.length
 }

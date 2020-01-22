@@ -37,8 +37,7 @@ class DashboardPageUsers extends React.Component {
 
   render() {
     //récupère les classifications du projet 1899 (le notre)
-    const data = this.state.loaded ? this.state.classifications
-      .filter(classifications => classifications.links.project == 1899)
+    const data = this.state.loaded ? utils.extractClassifications(this.state.classifications, 1899)
       .map(classif =>
         <div>
           <h3>Classif n° {classif.id} ({utils.diffTime(new Date(classif.metadata.started_at), new Date(classif.metadata.finished_at))} secondes)</h3>
@@ -53,6 +52,7 @@ class DashboardPageUsers extends React.Component {
       <div>
         <h1> Bienvenue {this.state.userName} ! </h1>
         <p>Tu as fait {this.state.classificationCount} classifications.</p>
+        <p>En moyenne tu passes {utils.computeTimeAverage(this.state.classifications).toFixed(2)} secondes par classification.</p>
       </div>
     : ''
     return (
