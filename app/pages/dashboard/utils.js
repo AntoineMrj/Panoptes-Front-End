@@ -17,6 +17,14 @@ export function getProjects(query) {
   })
 }
 
+
+/**
+* Fetch classifications for a given project
+* @param {integer} project_id Project id
+* @returns {promise}
+*/
+// TODO : gérer les requêtes plus complexes avec le page_size etc
+// https://panoptes.docs.apiary.io/#reference/classification/classification-collection/list-all-classifications
 export function getClassifications(project_id) {
   return new Promise(function(resolve, reject) {
     resolve(
@@ -26,4 +34,14 @@ export function getClassifications(project_id) {
       })
     )
   })
+}
+
+/**
+* Return the time (in seconds) between 2 dates
+* @param {date} started_at  Start time
+* @param {date} finished_at End time
+* @return {integer} Number of seconds between the 2 dates
+*/
+export function diffTime(started_at, finished_at) {
+  return Math.ceil(Math.abs(finished_at - started_at)/1000);
 }

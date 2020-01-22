@@ -1,5 +1,6 @@
 import React from 'react';
 import apiClient from 'panoptes-client/lib/api-client';
+import * as utils from './utils'
 
 class DashboardPageUsers extends React.Component {
   state={
@@ -25,16 +26,29 @@ class DashboardPageUsers extends React.Component {
       .then(() => {
         apiClient.type('classifications').get(query)
           .then((classifications) => {
-            this.setState({ classificationCount: classifications.length.toString() })
-            this.setState({ classifications: classifications })
-            this.setState({ loaded: true })
+            this.setState({
+              classificationCount: classifications.length.toString(),
+              classifications: classifications,
+              loaded: true
+            })
           })
       })
   }
 
   render() {
     //récupère les classifications du projet 1899 (le notre)
-    this.state.loaded ? console.log(this.state.classifications.filter(classif => classif.links.project == 1899)) : ''
+    const data = this.state.loaded ? this.state.classifications
+      .filter(classifications => classifications.links.project == 1899)
+      .map(classif =>
+        <div>
+          <h3>Classif n° {classif.id} ({utils.diffTime(new Date(classif.metadata.started_at), new Date(classif.metadata.finished_at))} secondes)</h3>
+          {classif.annotations.map(res =>
+            <p>
+              {res.task} : {res.value.toString()}
+            </p>)}
+        </div>)
+        : ''
+
     const content = this.state.loaded ?
       <div>
         <h1> Bienvenue {this.state.userName} ! </h1>
@@ -44,6 +58,7 @@ class DashboardPageUsers extends React.Component {
     return (
       <div>
         {content}
+        {data}
       </div>
     );
   }

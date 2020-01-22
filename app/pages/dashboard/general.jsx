@@ -18,7 +18,7 @@ class DashboardPageGeneral extends React.Component {
   }
 
   getClassifications() {
-    utils.getClassifications(604)
+    utils.getClassifications(1899)
       .then((classifications) => {
         console.log(classifications)
       })
@@ -44,15 +44,6 @@ class DashboardPageGeneral extends React.Component {
     })
   }
 
-
-/*  getClassifications(project_id) {
-    apiClient.type('classifications').get(1)
-    .then((classif) => {
-      console.log(classif)
-    })
-  }
-*/
-
   getAllUsers() {
 
     const query = {
@@ -72,7 +63,6 @@ class DashboardPageGeneral extends React.Component {
 
 
   render() {
-    console.log(this.state.projects)
     const projects = this.state.loaded ? <ProjectList projects={this.state.projects} /> : "loading ..."
     return (
       <div>

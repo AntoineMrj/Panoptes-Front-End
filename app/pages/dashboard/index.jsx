@@ -25,7 +25,7 @@ class DashboardPage extends React.Component {
 
   render() {
     const liStyle = {
-      visibility: this.state.current == '/dashboard' || this.state.current == '/dashboard/users' ? 'hidden' : 'visible'
+          visibility: this.state.current == '/dashboard' || this.state.current == '/dashboard/users' ? 'hidden' : 'visible'
     };
 
       // TODO : changer les className et ajouter notre propre style
@@ -56,7 +56,7 @@ class DashboardPage extends React.Component {
                 </li>
                 <li style={liStyle}>
                   <Link
-                    to={this.state.current}
+                    to="/dashboard/project"
                     activeClassName="active"
                     onClick={this.logClick ? this.logClick.bind(this, 'getInvolved.index.nav.callForProjects') : null}
                   >
