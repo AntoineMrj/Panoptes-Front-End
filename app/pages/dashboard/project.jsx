@@ -179,7 +179,6 @@ export default function DashboardPageProject(props) {
     const createRows = (classifs) => {
 
         var annotBySubject = {}
-        var subjectHashProba = {}
 
         // Populating annotBySubject
         classifs.forEach(classif => {
@@ -191,20 +190,26 @@ export default function DashboardPageProject(props) {
             }
         })
 
-        // Populating subjectHashProba with proba of each hash per subject
+        let subjectHashProba = {}
+        // Populating subjectHashProba with proba of each task per subject
         for (let subject in annotBySubject) {
             subjectHashProba[subject] = {}
+            for (let task in workflowTasks) {
+                subjectHashProba[subject][task] = {}
+            }
             annotBySubject[subject].forEach(annot => {
-                const hash = hashAnnotations(annot)
-                if (hash in subjectHashProba) {
-                    subjectHashProba[subject][hash] += 1
-                } else {
-                    subjectHashProba[subject][hash] = 1
-                }
+                annot.forEach(task => {
+                    var value = task.value.toString()
+                    var taskTitle = task.task
+                    if (value in subjectHashProba[subject][taskTitle]) {
+                        subjectHashProba[subject][taskTitle][value] += 1
+                    } else {
+                        subjectHashProba[subject][taskTitle][value] = 1
+                    }
+                })
             })
         }
         console.log("subjectHashProba: ", subjectHashProba)
-
     }
 
     /*
