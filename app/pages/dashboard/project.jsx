@@ -4,8 +4,7 @@ import apiClient from 'panoptes-client/lib/api-client'
 import DashboardTable from 'DashboardTable'
 import ProjectInfo from 'ProjectInfo'
 
-import workflowsJson from './data/workflows.json'
-import classificationsJson from './data/classifications.json'
+import classificationsJson from './data/classifications_antoinemrj.json'
 
 const names = [
     'Jean',
@@ -31,15 +30,6 @@ const projectInfo = {
     meanGSscore: 6.8
 }
 
-function getClassifications() {
-    classificationsJson.map((classification) => {
-        return {
-            user: classification.user_name,
-            workflow: classification.workflow_id
-        }
-    })
-}
-
 const initialTableState = {
     columns: [{ id: 'user', label: 'User', minWidth: 100 }],
     rows: []
@@ -48,14 +38,16 @@ const initialTableState = {
 const focusButtonStyle = {
     backgroundColor: "WhiteSmoke",
     borderColor: "SlateGrey",
-
 }
 
 export default function DashboardPageProject(props) {
 
-    const [workflows, setWorkflows] = useState()
-    const [isLoaded, setIsLoaded] = useState(false)
-    const [currentWorkflow, setCurrentWorkflow] = useState()
+    const [workflows, setWorkflows] = useState([])
+    const [workflowLoaded, setWorkflowLoaded] = useState(false)
+    const [currentWorkflow, setCurrentWorkflow] = useState(0)
+
+    const [classifications, setClassifications] = useState([])
+    const [classifLoaded, setClassifLoaded] = useState(false)
 
     const [columns, setColumns] = useState(initialTableState.columns)
     const [rows, setRows] = useState(initialTableState.rows)
@@ -71,27 +63,6 @@ export default function DashboardPageProject(props) {
     }
 
     /*
-    * Getting highest version of each workflow and return them
-    */
-    const getWorkflows = () => {
-        console.log("getWorkflow")
-        var version = {}
-        var workflows = {}
-        workflowsJson.map(workflow =>  {
-            var id = workflow.workflow_id
-            if (!(id in version)) {
-                version[id] = workflow.version
-            }
-            if (version[id] <= workflow.version) {
-                workflows[id] = workflow
-            }
-            //console.log(Object.keys(workflow.tasks).length)
-        })
-        setIsLoaded(true)
-        return Object.values(workflows)
-    }
-
-    /*
     * Loading the workflows of the current project
     */
     const loadWorkflows = () => {
@@ -102,7 +73,7 @@ export default function DashboardPageProject(props) {
         apiClient.type('workflows').get(query)
         .then((workflows) => {
             setWorkflows(workflows)
-            setIsLoaded(true)
+            setWorkflowLoaded(true)
         })
     }
 
@@ -117,15 +88,33 @@ export default function DashboardPageProject(props) {
         apiClient.type('classifications').get(query)
         .then((workflows) => {
             setWorkflows(workflows)
-            setIsLoaded(true)
+            setWorkflowLoaded(true)
         })
+    }
+
+    /*
+    * Loading classifications of current project
+    */
+    const loadClassificationsJson = () => {
+        setClassifications(classificationsJson.filter(classif =>
+            classif.links.project === props.params.id
+        ))
+    }
+
+    /*
+    * Returns all classifications of the current workflow
+    */
+    const getClassifications = () => {
+        return classifications.filter(classif =>
+            classif.links.workflow === currentWorkflow
+        )
     }
 
     /*
     * Retrieving all tasks of the current workflow
     */
     const retrieveTasks = () => {
-        if (isLoaded) {
+        if (workflowLoaded) {
             clearTableState()
             workflows.forEach(workflow => {
                 // We check the current workflow
@@ -161,23 +150,22 @@ export default function DashboardPageProject(props) {
             })
         }
     }
+    //props.location.state.project
 
     useEffect(() => {
         //setWorkflows(getWorkflows())
         loadWorkflows()
-        loadClassifications()
+        //loadClassifications()
+        loadClassificationsJson()
     }, [])
 
     useEffect(() => {
         // Loading tasks of the first workflow
-        if(typeof workflows !== undefined){
-          if (workflows !== undefined) {
-              setCurrentWorkflow(workflows[0].id)
-              retrieveTasks()
-          }
+        if (workflows.length > 0) {
+            setCurrentWorkflow(workflows[0].id)
+            retrieveTasks()
         }
-
-    }, [isLoaded])
+    }, [workflowLoaded])
 
     useEffect(() => {
         retrieveTasks()
@@ -187,13 +175,14 @@ export default function DashboardPageProject(props) {
         setCurrentWorkflow(event.target.name)
     }
 
-    const workflow_list = isLoaded ?
+    const workflow_list = workflowLoaded ?
         workflows.map(workflow =>
             <button
                 //style={buttonStyle}
                 className="workflow-button"
                 onClick={handleWorkflowClick}
                 name={workflow.id}
+                key={workflow.id}
             >
             {workflow.display_name}
             </button>) :
@@ -205,8 +194,10 @@ export default function DashboardPageProject(props) {
             <br/>
             {workflow_list}
             <br/>
+            <ProjectInfo
+                projectInfo={projectInfo}
+            />
             <br/>
-
             <DashboardTable
                 rows = {rows}
                 columns = {columns}
