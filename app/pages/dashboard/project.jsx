@@ -44,10 +44,13 @@ export default function DashboardPageProject(props) {
 
     const [workflows, setWorkflows] = useState([])
     const [workflowLoaded, setWorkflowLoaded] = useState(false)
-    const [currentWorkflow, setCurrentWorkflow] = useState(0)
+    const [currentWorkflow, setCurrentWorkflow] = useState(-1)
 
     const [classifications, setClassifications] = useState([])
     const [classifLoaded, setClassifLoaded] = useState(false)
+
+    const [meanTime, setMeanTime] = useState(-1)
+    const [feltDifficulty, setFeltDifficulty] = useState(-1)
 
     const [columns, setColumns] = useState(initialTableState.columns)
     const [rows, setRows] = useState(initialTableState.rows)
@@ -85,12 +88,10 @@ export default function DashboardPageProject(props) {
             project_id: props.params.id
         }
 
-        console.log(props.location.state)
-
         apiClient.type('classifications').get(query)
-        .then((workflows) => {
-            setWorkflows(workflows)
-            setWorkflowLoaded(true)
+        .then((classifs) => {
+            setClassifications(classifs)
+            setClassifLoaded(true)
         })
     }
 
@@ -152,7 +153,18 @@ export default function DashboardPageProject(props) {
             })
         }
     }
-    //props.location.state.project
+
+    /*
+    * Calculating the meanTime for the curretn workflow completion
+    */
+    const loadProjectInfo = (classifs) => {
+        var diffTime = 0
+        classifs.forEach(classif => {
+            let { started_at, finished_at } = classif.metadata
+            diffTime += Math.ceil(Math.abs(new Date(finished_at) - new Date(started_at)) / 1000)
+        })
+        return diffTime / classifs.length
+    }
 
     useEffect(() => {
         //setWorkflows(getWorkflows())
@@ -171,6 +183,7 @@ export default function DashboardPageProject(props) {
 
     useEffect(() => {
         retrieveTasks()
+        setMeanTime(loadProjectInfo(getClassifications()))
     }, [currentWorkflow])
 
     const handleWorkflowClick = event => {
@@ -192,12 +205,14 @@ export default function DashboardPageProject(props) {
 
     return (
         <div>
-            <h3>Project {props.params.id}</h3>
+            <h3>{props.location.state.project.display_name}</h3>
             <br/>
             {workflow_list}
             <br/>
             <ProjectInfo
                 projectInfo={projectInfo}
+                meanTime={meanTime}
+                feltDifficulty={feltDifficulty}
             />
             <br/>
             <DashboardTable
