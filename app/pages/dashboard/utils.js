@@ -16,3 +16,14 @@ export function getProjects(query) {
     )
   })
 }
+
+export function getClassifications(project_id) {
+  return new Promise(function(resolve, reject) {
+    resolve(
+      apiClient.type('classifications').get(1)
+      .then((classifications) => {
+        return classifications;
+      })
+    )
+  })
+}

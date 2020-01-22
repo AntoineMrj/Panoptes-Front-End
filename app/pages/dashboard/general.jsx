@@ -12,15 +12,22 @@ class DashboardPageGeneral extends React.Component {
 
   componentDidMount() {
     this.loadProjects()
+    this.getClassifications()
     //this.getAllUsers()
     //this.getClassifications(604)
+  }
+
+  getClassifications() {
+    utils.getClassifications(604)
+      .then((classifications) => {
+        console.log(classifications)
+      })
   }
 
   loadProjects() {
     const query = {
       tags: undefined,
       sort: "-launch_date",
-      launch_approved: true,
       cards: true,
       include: ['avatar'],
       state: 'live',
@@ -38,12 +45,13 @@ class DashboardPageGeneral extends React.Component {
   }
 
 
-  getClassifications(project_id) {
+/*  getClassifications(project_id) {
     apiClient.type('classifications').get(1)
     .then((classif) => {
       console.log(classif)
     })
   }
+*/
 
   getAllUsers() {
 
@@ -64,6 +72,7 @@ class DashboardPageGeneral extends React.Component {
 
 
   render() {
+    console.log(this.state.projects)
     const projects = this.state.loaded ? <ProjectList projects={this.state.projects} /> : "loading ..."
     return (
       <div>
