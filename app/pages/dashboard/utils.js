@@ -68,6 +68,24 @@ export function extractDistinctProjects(classifications) {
 }
 
 /**
+* Provide username (display_name) given a user id
+* @param {integer} user_id User id
+* @returns {promise}
+*/
+export function getUsername(user_id) {
+  return new Promise(function(resolve, reject) {
+    resolve(
+      apiClient.type('users').get({
+        id: user_id
+      })
+      .then((user) => {
+        return user;
+      })
+    )
+  })
+}
+
+/**
 * Computes average time spent on classifications given a classification set
 * @param {object} classifications Object containing classifications
 * @return {number} Return the avegare time spent

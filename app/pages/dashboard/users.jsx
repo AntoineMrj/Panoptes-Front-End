@@ -1,6 +1,7 @@
 import React from 'react';
 import apiClient from 'panoptes-client/lib/api-client';
 import * as utils from './utils'
+import UserToggleInfo from './UserToggleInfo'
 
 class DashboardPageUsers extends React.Component {
   state={
@@ -68,8 +69,12 @@ class DashboardPageUsers extends React.Component {
           : <p>Tu n'as pas encore fait de classifications.</p>}
       </div>
     : ''
+
+    const toggle = this.state.loaded ? <UserToggleInfo classifByUser={this.state.classifications} /> : ''
+
     return (
       <div>
+        {toggle}
         {content}
         {data}
       </div>

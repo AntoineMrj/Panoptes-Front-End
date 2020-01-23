@@ -3,6 +3,7 @@ import apiClient from 'panoptes-client/lib/api-client'
 
 import DashboardTable from 'DashboardTable'
 import ProjectInfo from 'ProjectInfo'
+import UserToggleInfo from 'UserToggleInfo'
 
 import * as utils from './utils'
 import classificationsJson from './data/classifications_antoinemrj.json'
@@ -357,6 +358,8 @@ export default function DashboardPageProject(props) {
                 columns={columns}
                 userCallback={getSelectedUser}
             />
+
+            <UserToggleInfo classifByUser={classifByUser} />
         </div>
     );
 }
