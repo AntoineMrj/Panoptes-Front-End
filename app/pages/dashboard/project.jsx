@@ -4,6 +4,7 @@ import apiClient from 'panoptes-client/lib/api-client'
 import DashboardTable from 'DashboardTable'
 import ProjectInfo from 'ProjectInfo'
 
+import * as utils from './utils'
 import classificationsJson from './data/classifications_antoinemrj.json'
 
 const names = [
@@ -57,6 +58,9 @@ export default function DashboardPageProject(props) {
 
     const [buttonStyle, setButtonStyle] = useState()
 
+    // Object containing tasks of the workflow with their type
+    var workflowTasks = {}
+
     /*
     * Reinit the columns and rows state
     */
@@ -107,7 +111,7 @@ export default function DashboardPageProject(props) {
     /*
     * Returns all classifications of the current workflow
     */
-    const getClassifications = () => {
+    const getClassifByWorkflow = () => {
         return classifications.filter(classif =>
             classif.links.workflow === currentWorkflow
         )
@@ -123,21 +127,23 @@ export default function DashboardPageProject(props) {
                 // We check the current workflow
                 if (workflow.id === currentWorkflow) {
 
-                    let tasks = []
-
-                    for (let task in workflow.tasks) {
-                        tasks.push(task)
+                    Object.entries(workflow.tasks).forEach(entry => {
+                        let key = entry[0]
+                        let value = entry[1]
+                        workflowTasks[key] = value.type
+                        //tasks.push(task)
                         setColumns(prevColumns =>
                             [...(prevColumns), {
-                                id: task,
-                                label: task,
+                                id: key,
+                                label: key,
                                 minWidth: 60,
                                 align: 'right',
                                 format: value => value.toLocaleString()
                             }]
                         )
-                    }
+                    })
                     // Simulating rows for now
+                    /*
                     names.forEach(name => {
                         let randScoresRow = { user: name }
                         tasks.forEach(task => {
@@ -149,21 +155,76 @@ export default function DashboardPageProject(props) {
                             ]
                         )
                     })
+                    */
                 }
             })
         }
     }
 
     /*
-    * Calculating the meanTime for the curretn workflow completion
+    * Calculating the meanTime for the current workflow completion
     */
     const loadProjectInfo = (classifs) => {
         var diffTime = 0
         classifs.forEach(classif => {
             let { started_at, finished_at } = classif.metadata
-            diffTime += Math.ceil(Math.abs(new Date(finished_at) - new Date(started_at)) / 1000)
+            diffTime += utils.diffTime(new Date(started_at), new Date(finished_at))
         })
         return diffTime / classifs.length
+    }
+
+    /*
+    * Creating rows with classifications
+    */
+    const createRows = (classifs) => {
+
+        var annotBySubject = {}
+
+        // Populating annotBySubject
+        classifs.forEach(classif => {
+            let subjects = classif.links.subjects.join()
+            if (subjects in annotBySubject) {
+                annotBySubject[subjects].push(classif.annotations)
+            } else {
+                annotBySubject[subjects] = [classif.annotations]
+            }
+        })
+
+        let subjectHashProba = {}
+        // Populating subjectHashProba with proba of each task per subject
+        for (let subject in annotBySubject) {
+            subjectHashProba[subject] = {}
+            for (let task in workflowTasks) {
+                subjectHashProba[subject][task] = {}
+            }
+            annotBySubject[subject].forEach(annot => {
+                annot.forEach(task => {
+                    var value = task.value.toString()
+                    var taskTitle = task.task
+                    if (value in subjectHashProba[subject][taskTitle]) {
+                        subjectHashProba[subject][taskTitle][value] += 1
+                    } else {
+                        subjectHashProba[subject][taskTitle][value] = 1
+                    }
+                })
+            })
+        }
+        console.log("subjectHashProba: ", subjectHashProba)
+    }
+
+    /*
+    * Hashing annotations
+    */
+    const hashAnnotations = (annotations) => {
+        var result = ""
+        annotations.forEach(annot => {
+            if (workflowTasks[annot.task] === 'drawing') {
+                // TODO: Compare drawings
+            } else {
+                result += annot.value
+            }
+        })
+        return result
     }
 
     useEffect(() => {
@@ -183,7 +244,9 @@ export default function DashboardPageProject(props) {
 
     useEffect(() => {
         retrieveTasks()
-        setMeanTime(loadProjectInfo(getClassifications()))
+        var classifByWorkflow = getClassifByWorkflow()
+        createRows(classifByWorkflow)
+        setMeanTime(loadProjectInfo(classifByWorkflow))
     }, [currentWorkflow])
 
     const handleWorkflowClick = event => {
