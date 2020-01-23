@@ -312,11 +312,8 @@ export default function DashboardPageProject(props) {
 
     useEffect(() => {
         setIsUserSelected(true)
-        console.log("selectedUser: ", selectedUser)
-        console.log("classifByUser 1: ", getClassifByUser(getClassifByWorkflow()))
         var classifByWorkflow = getClassifByWorkflow()
         setClassifByUser(getClassifByUser(classifByWorkflow))
-        console.log("classifByUser 2: ", classifByUser)
     }, [selectedUser])
 
     /*
@@ -339,7 +336,9 @@ export default function DashboardPageProject(props) {
             </button>) :
         "loading..."
 
-    const userInfo = ""
+    const userInfo = Object.keys(classifByUser).length !== 0 ?
+        (<UserToggleInfo classifByUser={classifByUser} />) :
+        ""
 
     return (
         <div>
@@ -358,8 +357,7 @@ export default function DashboardPageProject(props) {
                 columns={columns}
                 userCallback={getSelectedUser}
             />
-
-            <UserToggleInfo classifByUser={classifByUser} />
+            {userInfo}
         </div>
     );
 }
