@@ -23,11 +23,15 @@ export function getProjects(query) {
 * @returns {promise}
 */
 // TODO : gérer les requêtes plus complexes avec le page_size etc
+// TODO : gérer la pagination pour les projets avec bcp de classifs
 // https://panoptes.docs.apiary.io/#reference/classification/classification-collection/list-all-classifications
 export function getClassifications(project_id) {
   return new Promise(function(resolve, reject) {
     resolve(
-      apiClient.type('classifications').get({project_id : project_id})
+      apiClient.type('classifications/project').get({
+        project_id: project_id,
+        page_size: 1000
+      })
       .then((classifications) => {
         return classifications;
       })

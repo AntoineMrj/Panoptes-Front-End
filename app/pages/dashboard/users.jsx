@@ -14,6 +14,15 @@ class DashboardPageUsers extends React.Component {
     this.loadUserData()
   }
 
+  getClassifications() {
+    setTimeout(() => {
+      utils.getClassifications(1899)
+      .then((classifications) => {
+        console.log(classifications)
+      })
+     }, 500);
+  }
+
   loadUserData() {
     const query = {
         page_size: 100

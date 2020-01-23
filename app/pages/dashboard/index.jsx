@@ -29,6 +29,7 @@ class DashboardPage extends React.Component {
     };
 
       // TODO : changer les className et ajouter notre propre style
+      // TODO : regler bug de la barre
     return (
       <div className="secondary-page get-involved-page">
         <Helmet title="Dashboard" />
@@ -56,7 +57,7 @@ class DashboardPage extends React.Component {
                 </li>
                 <li style={liStyle}>
                   <Link
-                    to="/dashboard/project"
+                    to={this.state.current}
                     activeClassName="active"
                     onClick={this.logClick ? this.logClick.bind(this, 'getInvolved.index.nav.callForProjects') : null}
                   >
