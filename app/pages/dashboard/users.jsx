@@ -51,8 +51,12 @@ class DashboardPageUsers extends React.Component {
     const content = this.state.loaded ?
       <div>
         <h1> Bienvenue {this.state.userName} ! </h1>
-        <p>Tu as fait {this.state.classificationCount} classifications.</p>
-        <p>En moyenne tu passes {utils.computeTimeAverage(this.state.classifications).toFixed(2)} secondes par classification.</p>
+        {this.state.classifications.length > 0 ?
+          <div>
+            <p>Tu as fait {this.state.classificationCount} classifications.</p>
+            <p>En moyenne tu passes {utils.computeTimeAverage(this.state.classifications).toFixed(2)} secondes par classification.</p>
+          </div>
+          : <p>Tu n'as pas encore fait de classifications.</p>}
       </div>
     : ''
     return (
