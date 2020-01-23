@@ -32,7 +32,9 @@ const projectInfo = {
 }
 
 const initialTableState = {
-    columns: [{ id: 'user', label: 'User', minWidth: 100 }],
+    columns: [
+        { id: 'user', label: 'User', minWidth: 60 },
+    ],
     rows: []
 }
 
@@ -176,17 +178,32 @@ export default function DashboardPageProject(props) {
     /*
     * Creating rows with classifications
     */
-    const createRows = (classifs) => {
+    const computeAnnotations = (classifs) => {
 
         var annotBySubject = {}
+        var annotByUser = {}
 
         // Populating annotBySubject
         classifs.forEach(classif => {
             let subjects = classif.links.subjects.join()
+            let user = classif.links.user
+            // Populating annotBySubject
             if (subjects in annotBySubject) {
                 annotBySubject[subjects].push(classif.annotations)
             } else {
                 annotBySubject[subjects] = [classif.annotations]
+            }
+            // Populating annotByUser
+            if (user in annotByUser) {
+                annotByUser[user].push({
+                    annotations: classif.annotations,
+                    subjects: subjects
+                })
+            } else {
+                annotByUser[user] = [{
+                    annotations: classif.annotations,
+                    subjects: subjects
+                }]
             }
         })
 
@@ -195,7 +212,7 @@ export default function DashboardPageProject(props) {
         for (let subject in annotBySubject) {
             subjectHashProba[subject] = {}
             for (let task in workflowTasks) {
-                subjectHashProba[subject][task] = {}
+                subjectHashProba[subject][task] = { diffAnsTotal: 0 }
             }
             annotBySubject[subject].forEach(annot => {
                 annot.forEach(task => {
@@ -206,10 +223,69 @@ export default function DashboardPageProject(props) {
                     } else {
                         subjectHashProba[subject][taskTitle][value] = 1
                     }
+                    subjectHashProba[subject][taskTitle].diffAnsTotal += 1
                 })
             })
         }
         console.log("subjectHashProba: ", subjectHashProba)
+        console.log("annotByUser: ", annotByUser)
+
+        computeScores(annotByUser, subjectHashProba)
+    }
+
+    /*
+    * Method computing the scores of each user
+    */
+    const computeScores = (annotByUser, subjectHashProba) => {
+
+        // Object containing the scores of each user on the current workflow
+        var scoreByUser = {}
+
+        Object.entries(annotByUser).forEach(entry => {
+            let user_id = entry[0]
+            let value = entry[1]
+
+            // Initialising score of each task of each user to 0
+            scoreByUser[user_id] = {}
+            for (let task in workflowTasks) {
+                scoreByUser[user_id][task] = 0
+            }
+
+            value.forEach(classif => {
+                console.log(("classif: ", classif));
+                // go over annotation and subjects
+                classif.annotations.forEach(annot => {
+
+                })
+            })
+        })
+        console.log("scoreByUser: ", scoreByUser)
+        createRows(scoreByUser)
+    }
+
+    /*
+    * Method creating the rows of the score table
+    */
+    const createRows = (scoreByUser) => {
+        // Iterating over the users
+        Object.entries(scoreByUser).forEach(entry => {
+            let user_id = entry[0]
+            let scores = entry[1]
+
+            let row = { user: user_id }
+
+            // Iterating over the tasks to get the scores
+            Object.entries(scores).forEach(task => {
+                let key = task[0]
+                let value = task[1]
+                row[key] = value
+            })
+            setRows(prevRows =>
+                [...(prevRows),
+                    row
+                ]
+            )
+        })
     }
 
     /*
@@ -245,7 +321,7 @@ export default function DashboardPageProject(props) {
     useEffect(() => {
         retrieveTasks()
         var classifByWorkflow = getClassifByWorkflow()
-        createRows(classifByWorkflow)
+        computeAnnotations(classifByWorkflow)
         setMeanTime(loadProjectInfo(classifByWorkflow))
     }, [currentWorkflow])
 
