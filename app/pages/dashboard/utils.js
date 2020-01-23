@@ -55,6 +55,14 @@ export function extractClassifications(classifications, project_id) {
   return classifications.filter(classifications => classifications.links.project == project_id)
 }
 
+export function extractDistinctProjects(classifications) {
+  //var res = classifications.map((classif) => classif.)
+
+  //console.log(res)
+
+  return null
+}
+
 /**
 * Computes average time spent on classifications given a classification set
 * @param {object} classifications Object containing classifications
