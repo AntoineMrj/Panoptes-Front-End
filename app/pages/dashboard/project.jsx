@@ -6,6 +6,7 @@ import ProjectInfo from 'ProjectInfo'
 
 import * as utils from './utils'
 import classificationsJson from './data/classifications_antoinemrj.json'
+import classificationsJson1899 from './data/classifications-projet-1899.json'
 
 const names = [
     'Jean',
@@ -105,7 +106,7 @@ export default function DashboardPageProject(props) {
     * Loading classifications of current project
     */
     const loadClassificationsJson = () => {
-        setClassifications(classificationsJson.filter(classif =>
+        setClassifications(classificationsJson1899.filter(classif =>
             classif.links.project === props.params.id
         ))
     }
@@ -144,20 +145,6 @@ export default function DashboardPageProject(props) {
                             }]
                         )
                     })
-                    // Simulating rows for now
-                    /*
-                    names.forEach(name => {
-                        let randScoresRow = { user: name }
-                        tasks.forEach(task => {
-                            randScoresRow[task] = Math.round(Math.random() * 10) + '/10'
-                        })
-                        setRows(prevRows =>
-                            [...(prevRows),
-                                randScoresRow
-                            ]
-                        )
-                    })
-                    */
                 }
             })
         }
@@ -227,9 +214,6 @@ export default function DashboardPageProject(props) {
                 })
             })
         }
-        console.log("subjectHashProba: ", subjectHashProba)
-        console.log("annotByUser: ", annotByUser)
-
         computeScores(annotByUser, subjectHashProba)
     }
 
@@ -252,21 +236,22 @@ export default function DashboardPageProject(props) {
             }
 
             value.forEach(classif => {
-                console.log(("classif: ", classif));
-                // go over annotation and subjects
+                // Going over annotation and subjects
                 classif.annotations.forEach(annot => {
-
+                    let { task, value } = annot
+                    let currentValue = subjectHashProba[classif.subjects][task][value.toString()]
+                    let diffAnsTotal = subjectHashProba[classif.subjects][task].diffAnsTotal
+                    scoreByUser[user_id][task] += currentValue / diffAnsTotal
                 })
             })
         })
-        console.log("scoreByUser: ", scoreByUser)
-        createRows(scoreByUser)
+        createRows(scoreByUser, annotByUser)
     }
 
     /*
     * Method creating the rows of the score table
     */
-    const createRows = (scoreByUser) => {
+    const createRows = (scoreByUser, annotByUser) => {
         // Iterating over the users
         Object.entries(scoreByUser).forEach(entry => {
             let user_id = entry[0]
@@ -277,8 +262,9 @@ export default function DashboardPageProject(props) {
             // Iterating over the tasks to get the scores
             Object.entries(scores).forEach(task => {
                 let key = task[0]
-                let value = task[1]
-                row[key] = value
+                let classifNum = Object.keys(annotByUser[user_id]).length
+                let value = (task[1] / classifNum) * 100
+                row[key] = (value.toFixed(2) + ' %')
             })
             setRows(prevRows =>
                 [...(prevRows),
