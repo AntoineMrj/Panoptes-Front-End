@@ -8,24 +8,6 @@ import * as utils from './utils'
 import classificationsJson from './data/classifications_antoinemrj.json'
 import classificationsJson1899 from './data/classifications-projet-1899.json'
 
-const names = [
-    'Jean',
-    'Paul',
-    'Pena',
-    'Pierre',
-    'Jacques',
-    'Thomas',
-    'Rémi',
-    'Alexandre',
-    'Jeanne',
-    'Estelle',
-    'Solène',
-    'Louise',
-    'Marie',
-    'Robert',
-    'Lola',
-]
-
 const projectInfo = {
     meanTime: 10,
     feltDifficulty: 3.2,
@@ -58,6 +40,10 @@ export default function DashboardPageProject(props) {
 
     const [columns, setColumns] = useState(initialTableState.columns)
     const [rows, setRows] = useState(initialTableState.rows)
+
+    const [selectedUser, setSelectedUser] = useState()
+    const [isUserSelected, setIsUserSelected] = useState(false)
+    const [classifByUser, setClassifByUser] = useState({})
 
     const [buttonStyle, setButtonStyle] = useState()
 
@@ -117,6 +103,12 @@ export default function DashboardPageProject(props) {
     const getClassifByWorkflow = () => {
         return classifications.filter(classif =>
             classif.links.workflow === currentWorkflow
+        )
+    }
+
+    const getClassifByUser = (classifs) => {
+        return classifs.filter(classif =>
+            classif.links.user === selectedUser
         )
     }
 
@@ -275,7 +267,7 @@ export default function DashboardPageProject(props) {
     }
 
     /*
-    * Hashing annotations
+    * Hashing annotations - NOT USED
     */
     const hashAnnotations = (annotations) => {
         var result = ""
@@ -289,8 +281,14 @@ export default function DashboardPageProject(props) {
         return result
     }
 
+    /*
+    * Callback that gets the selected user in the DashboardTable component
+    */
+    const getSelectedUser = (user) => {
+        setSelectedUser(user)
+    }
+
     useEffect(() => {
-        //setWorkflows(getWorkflows())
         loadWorkflows()
         //loadClassifications()
         loadClassificationsJson()
@@ -311,6 +309,18 @@ export default function DashboardPageProject(props) {
         setMeanTime(loadProjectInfo(classifByWorkflow))
     }, [currentWorkflow])
 
+    useEffect(() => {
+        setIsUserSelected(true)
+        console.log("selectedUser: ", selectedUser)
+        console.log("classifByUser 1: ", getClassifByUser(getClassifByWorkflow()))
+        var classifByWorkflow = getClassifByWorkflow()
+        setClassifByUser(getClassifByUser(classifByWorkflow))
+        console.log("classifByUser 2: ", classifByUser)
+    }, [selectedUser])
+
+    /*
+    * Handling click on workflow buttons
+    */
     const handleWorkflowClick = event => {
         setCurrentWorkflow(event.target.name)
     }
@@ -328,6 +338,8 @@ export default function DashboardPageProject(props) {
             </button>) :
         "loading..."
 
+    const userInfo = ""
+
     return (
         <div>
             <h3>{props.location.state.project.display_name}</h3>
@@ -341,8 +353,9 @@ export default function DashboardPageProject(props) {
             />
             <br/>
             <DashboardTable
-                rows = {rows}
-                columns = {columns}
+                rows={rows}
+                columns={columns}
+                userCallback={getSelectedUser}
             />
         </div>
     );
