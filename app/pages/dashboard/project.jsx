@@ -185,9 +185,7 @@ export default function DashboardPageProject(props) {
                     annotations: classif.annotations,
                     subjects: subjects
                 }]
-            }
-            // Populating users array
-            if (!users.includes(user)) {
+                // Populating users state array
                 setUsers(prevUsers =>
                     [...(prevUsers),
                         user
