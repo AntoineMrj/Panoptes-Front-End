@@ -41,6 +41,21 @@ function DashboardTable(props) {
         props.userCallback(userId)
     }
 
+    const getStyle = (column, value) => {
+        var color = "black"
+        if (value.includes('%')) {
+            value = parseInt(value)
+            if (value >= 75) {
+                color = "green"
+            } else if (value <= 35) {
+                color = "red"
+            } else {
+                color = "orange"
+            }
+        }
+        return { color: color }
+    }
+
     return (
         <div>
             <Paper className={classes.root}>
@@ -66,7 +81,7 @@ function DashboardTable(props) {
                           {columns.map(column => {
                             const value = row[column.id];
                             return (
-                              <TableCell key={column.id} align={column.align} onClick={() => sendUserId(row.user)}>
+                              <TableCell key={column.id} align={column.align} onClick={() => sendUserId(row.user)} style={getStyle(column, value)}>
                                 {column.format && typeof value === 'number' ? column.format(value) : value}
                               </TableCell>
                             );
