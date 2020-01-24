@@ -153,7 +153,7 @@ export default function DashboardPageProject(props) {
             let { started_at, finished_at } = classif.metadata
             diffTime += utils.diffTime(new Date(started_at), new Date(finished_at))
         })
-        return diffTime / classifs.length
+        return (diffTime / classifs.length).toFixed(2)
     }
 
     /*
@@ -315,6 +315,8 @@ export default function DashboardPageProject(props) {
         var classifByWorkflow = getClassifByWorkflow()
         computeAnnotations(classifByWorkflow)
         setMeanTime(loadProjectInfo(classifByWorkflow))
+        setUsers([])
+        workflowTasks = {}
     }, [currentWorkflow])
 
     useEffect(() => {
