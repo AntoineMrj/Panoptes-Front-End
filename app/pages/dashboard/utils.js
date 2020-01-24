@@ -59,14 +59,6 @@ export function extractClassifications(classifications, project_id) {
   return classifications.filter(classifications => classifications.links.project == project_id)
 }
 
-export function extractDistinctProjects(classifications) {
-  //var res = classifications.map((classif) => classif.)
-
-  //console.log(res)
-
-  return null
-}
-
 /**
 * Provide username (display_name) given a user id
 * @param {integer} user_id User id
@@ -83,6 +75,26 @@ export function getUsername(user_id) {
       })
     )
   })
+}
+
+/**
+* Provide user ids who did the given classifications
+* @param {object} classifications classifications
+* @returns {array} array containing the different user ids
+*/
+export function getUserIds(classifications) {
+  var lookup = {};
+  var result = [];
+
+  for (var item, i = 0; item = classifications[i++];) {
+    var id = item.links.user;
+    if (!(id in lookup)) {
+      lookup[id] = 1;
+      result.push(id);
+    }
+  }
+
+  return result
 }
 
 /**
