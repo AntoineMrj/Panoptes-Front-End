@@ -45,6 +45,7 @@ export default function DashboardPageProject(props) {
     const [selectedUser, setSelectedUser] = useState()
     const [isUserSelected, setIsUserSelected] = useState(false)
     const [classifByUser, setClassifByUser] = useState({})
+    const [users, setUsers] = useState([])
 
     const [buttonStyle, setButtonStyle] = useState()
 
@@ -184,6 +185,14 @@ export default function DashboardPageProject(props) {
                     annotations: classif.annotations,
                     subjects: subjects
                 }]
+            }
+            // Populating users array
+            if (!users.includes(user)) {
+                setUsers(prevUsers =>
+                    [...(prevUsers),
+                        user
+                    ]
+                )
             }
         })
 
@@ -337,7 +346,7 @@ export default function DashboardPageProject(props) {
         "loading..."
 
     const userInfo = Object.keys(classifByUser).length !== 0 ?
-        (<UserToggleInfo classifByUser={classifByUser} />) :
+        (<UserToggleInfo classifByUser={classifByUser} users={users} />) :
         ""
 
     return (
