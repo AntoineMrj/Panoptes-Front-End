@@ -1,44 +1,55 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
+import apiClient from 'panoptes-client/lib/api-client';
 import * as utils from './utils'
 
-class UserToggleInfo extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      loaded: false,
-      display_name: ''
-    }
+import infoLogo from './img/info.png'
 
-    this.loadUserInfo = this.loadUserInfo.bind(this)
-  }
+const toggleInfoStyle = {
+    padding: '10px',
+    marginTop: '10px',
+    borderRadius: '4px',
+    backgroundColor: "WhiteSmoke",
+    borderColor: "SlateGrey",
+}
 
-  componentDidMount() {
-    //this.loadUserInfo()
-  }
+function UserToggleInfo(props) {
+  const [loaded, setLoaded] = useState(false)
+  const [currentUser, setCurrentUser] = useState('')
 
-  loadUserInfo() {
-    utils.getUsername(this.props.classifByUser[0].links.user)
-      .then((user) => {
-        this.setState({
-          loaded: true,
-          display_name: user[0].display_name
-        })
+  const [users, setUsers] = useState([])
+  const [usersLoaded, setUsersLoaded] = useState(false)
+
+  useEffect(() => {
+    usersLoaded ? setCurrentUser(users.filter(user => user.id == props.classifByUser[0].links.user)[0].display_name) : ''
+  }, [props])
+
+  useEffect(() => {
+    var result = props.users.map((userid) => {
+      return apiClient.type('users').get({
+        id: userid
       })
-  }
+      .then((user) => {
+        return {"id":parseInt(userid), "display_name":user[0].display_name}
+      })
+    })
 
-  render() {
-    //this.state.loaded ? console.log(this.state.display_name) : ''
-    return (
-      <div>
-          <p>User information:</p>
-          <ul>
-              <li>Average resolution time of the workflow: {utils.computeTimeAverage(this.props.classifByUser).toFixed(2)} seconds</li>
-              <li>{this.props.classifByUser.length.toString()} classifByUser done for this workflow</li>
-              <li>Mean GoldStandard score: /10</li>
-          </ul>
-      </div>
-    )
-  }
+    Promise.all(result).then(function(result) {
+      setUsers(result)
+      setUsersLoaded(true)
+    });
+  }, [])
+
+  return(
+
+    <div style={toggleInfoStyle}>
+
+        <h3><img src={infoLogo} /> {currentUser} informations :</h3>
+        <ul>
+            <li>Average resolution time of the workflow: {utils.computeTimeAverage(props.classifByUser).toFixed(2)} seconds</li>
+            <li>{props.classifByUser.length.toString()} classifications done for this workflow</li>
+        </ul>
+    </div>
+  )
 }
 
 export default UserToggleInfo

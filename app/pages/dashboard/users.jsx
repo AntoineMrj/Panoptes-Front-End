@@ -19,7 +19,7 @@ class DashboardPageUsers extends React.Component {
     setTimeout(() => {
       utils.getClassifications(1899)
       .then((classifications) => {
-        console.log(classifications)
+        //console.log(classifications)
       })
      }, 500);
   }

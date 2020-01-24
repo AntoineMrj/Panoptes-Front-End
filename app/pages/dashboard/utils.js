@@ -86,6 +86,30 @@ export function getUsername(user_id) {
 }
 
 /**
+* Provide user ids who did the given classifications
+* @param {object} classifications classifications
+* @returns {array} array containing the different user ids
+*/
+export function getUserIds(classifications) {
+
+  var lookup = {};
+  var result = [];
+
+  for (var item, i = 0; item = classifications[i++];) {
+    var id = item.links.user;
+
+    if (!(id in lookup)) {
+      lookup[id] = 1;
+      result.push(id);
+    }
+  }
+
+  console.log(result)
+
+  return result
+}
+
+/**
 * Computes average time spent on classifications given a classification set
 * @param {object} classifications Object containing classifications
 * @return {number} Return the avegare time spent
