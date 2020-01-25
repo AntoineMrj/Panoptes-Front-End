@@ -131,3 +131,9 @@ export function computeTimeAverage(classifications) {
   .map((classification) => diffTime(new Date(classification.metadata.started_at), new Date(classification.metadata.finished_at)))
   .reduce((acc, curr) => acc + curr) / classifications.length
 }
+
+/*
+* Checinkg for null values
+*/
+export const checkForNull = value =>
+        value === null ? "null" : value

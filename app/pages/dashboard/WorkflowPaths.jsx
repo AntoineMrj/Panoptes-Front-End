@@ -50,7 +50,7 @@ export default function WorkflowPaths(props) {
 
     useEffect(() => {
         displayPaths()
-    }, [])
+    }, [props])
 
     return (
         <div>
