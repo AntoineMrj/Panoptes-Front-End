@@ -249,6 +249,10 @@ export default function DashboardPageProject(props) {
                     paths[subject_id][concatAnnot] = 1
                 }
             })
+            Object.values(paths[subject_id]).map(value =>
+                value = ((value / annotations.length) * 100).toFixed(2) + ' %'
+            )
+            console.log("paths[subject_id]: ", paths[subject_id])
         })
         setWorkflowPaths(paths)
     }
