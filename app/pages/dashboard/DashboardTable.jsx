@@ -45,9 +45,9 @@ function DashboardTable(props) {
         var color = "black"
         if (value.includes('%')) {
             value = parseInt(value)
-            if (value >= 75) {
+            if (value >= 70) {
                 color = "green"
-            } else if (value <= 35) {
+            } else if (value <= 40) {
                 color = "red"
             } else {
                 color = "orange"

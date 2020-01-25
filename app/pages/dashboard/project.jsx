@@ -4,6 +4,7 @@ import apiClient from 'panoptes-client/lib/api-client'
 import DashboardTable from 'DashboardTable'
 import ProjectInfo from 'ProjectInfo'
 import UserToggleInfo from 'UserToggleInfo'
+import WorkflowPaths from 'WorkflowPaths'
 
 import * as utils from './utils'
 import classificationsJson1899 from './data/classifications-projet-1899.json'
@@ -29,6 +30,8 @@ const focusButtonStyle = {
 export default function DashboardPageProject(props) {
 
     const [projectName, setProjectName] = useState('Loading...')
+
+    const [workflowPaths, setWorkflowPaths] = useState({})
 
     const [workflows, setWorkflows] = useState([])
     const [workflowLoaded, setWorkflowLoaded] = useState(false)
@@ -225,8 +228,37 @@ export default function DashboardPageProject(props) {
                 })
             })
         }
+        computeWorkflowPaths(annotBySubject)
         computeScores(annotByUser, subjectHashProba)
     }
+
+    /*
+    * Computes all the different workflow paths per subject
+    */
+    const computeWorkflowPaths = (annotBySubject) => {
+        var paths = {}
+        Object.entries(annotBySubject).forEach(entry => {
+            let subject_id = entry[0]
+            let annotations = entry[1]
+            paths[subject_id] = {}
+            annotations.forEach(annot => {
+                let concatAnnot = concatAnnotation(annot)
+                if (concatAnnot in paths[subject_id]) {
+                    paths[subject_id][concatAnnot] += 1
+                } else {
+                    paths[subject_id][concatAnnot] = 1
+                }
+            })
+        })
+        setWorkflowPaths(paths)
+    }
+
+    /*
+    * Concatening similar annotations
+    */
+    const concatAnnotation = annot =>
+        annot.map(task => task.task)
+        .reduce((acc, current) => acc + " -> " + current)
 
     /*
     * Method computing the scores of each user
@@ -355,7 +387,11 @@ export default function DashboardPageProject(props) {
             >
             {workflow.display_name}
             </button>) :
-        "loading..."
+        "Loading workflows..."
+
+    const paths_list = Object.keys(workflowPaths).length !== 0 ?
+        (<WorkflowPaths paths={workflowPaths} />) :
+        "Loading paths..."
 
     const userInfo = Object.keys(classifByUser).length !== 0 ?
         (<UserToggleInfo classifByUser={classifByUser} users={users} />) :
@@ -367,6 +403,8 @@ export default function DashboardPageProject(props) {
             <br/>
             {workflow_list}
             <br/>
+            <br/>
+            {paths_list}
             <ProjectInfo
                 projectInfo={projectInfo}
                 meanTime={meanTime}
