@@ -19,48 +19,27 @@ export function getProjects(query) {
 
 /**
 * Fetch classifications for a given project
+* @param {integer} page_id    Starting page to fetch
 * @param {integer} project_id Project id
+* @param {array} result       Void array that will contains final result
 * @returns {promise}
 */
-// TODO : gérer les requêtes plus complexes avec le page_size etc
-// TODO : gérer la pagination pour les projets avec bcp de classifs
-// TODO : gérer les pages multiples
-// https://panoptes.docs.apiary.io/#reference/classification/classification-collection/list-all-classifications
-export function getClassifications(project_id) {
-
-  /*const promise1 = Promise.resolve(3);
-  const promise2 = 42;
-  const promise3 = new Promise(function(resolve, reject) {
-    setTimeout(resolve, 100, 'foo');
-  });
-
-  Promise.all([promise1, promise2, promise3]).then(function(values) {
-    console.log(values);
-  });*/
-
-  const promise1 = Promise.resolve(
-    apiClient.type('classifications/project').get({
+export function getClassifications(page_id, project_id, result) {
+    return apiClient.type('classifications/project').get({
       project_id: project_id,
       page_size: 100,
-      page:1
+      page:page_id
     })
     .then((classifications) => {
-      console.log(classifications)
+      if(classifications.length == 100){
+        result.push(classifications)
+        return getClassifications(page_id + 1, project_id, result)
+      }
+      else{
+        result.push(classifications)
+        return [].concat.apply([], result);
+      }
     })
-  )
-
-  const promise = Promise.resolve(
-        apiClient.type('classifications/project').get({
-          project_id: project_id,
-          page_size: 100,
-          page:1
-        })
-        .then((classifications) => {
-          return classifications;
-        })
-      )
-
-      return promise
 }
 
 /**
