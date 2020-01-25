@@ -6,7 +6,6 @@ import ProjectInfo from 'ProjectInfo'
 import UserToggleInfo from 'UserToggleInfo'
 
 import * as utils from './utils'
-import classificationsJson from './data/classifications_antoinemrj.json'
 import classificationsJson1899 from './data/classifications-projet-1899.json'
 
 const projectInfo = {
@@ -28,6 +27,9 @@ const focusButtonStyle = {
 }
 
 export default function DashboardPageProject(props) {
+
+    const [projectName, setProjectName] = useState('Loading...')
+    const [projectNameLoaded, setProjectNameLoaded] = useState(false)
 
     const [workflows, setWorkflows] = useState([])
     const [workflowLoaded, setWorkflowLoaded] = useState(false)
@@ -51,6 +53,17 @@ export default function DashboardPageProject(props) {
 
     // Object containing tasks of the workflow with their type
     var workflowTasks = {}
+
+    /*
+    * Setting the projectName state given the id
+    */
+    const getProjectName = () => {
+        apiClient.type('projects').get(props.params.id)
+        .then((project) => {
+            setProjectNameLoaded(true)
+            setProjectName(project.display_name)
+        })
+    }
 
     /*
     * Reinit the columns and rows state
@@ -297,6 +310,7 @@ export default function DashboardPageProject(props) {
     }
 
     useEffect(() => {
+        getProjectName()
         loadWorkflows()
         //loadClassifications()
         loadClassificationsJson()
@@ -351,7 +365,7 @@ export default function DashboardPageProject(props) {
 
     return (
         <div>
-            <h3>{props.location.state.project.display_name}</h3>
+            <h3>{projectName}</h3>
             <br/>
             {workflow_list}
             <br/>
