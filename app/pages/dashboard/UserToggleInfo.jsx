@@ -52,7 +52,8 @@ function UserToggleInfo(props) {
         {
           classif.annotations.map(res =>
             <li style={{listStyleType: 'none'}}>
-              {res.task} : {res.value.toString()}
+
+              {res.task} : {utils.checkForNull(res.value).toString()}
             </li>
           )
         }
