@@ -29,7 +29,6 @@ const focusButtonStyle = {
 export default function DashboardPageProject(props) {
 
     const [projectName, setProjectName] = useState('Loading...')
-    const [projectNameLoaded, setProjectNameLoaded] = useState(false)
 
     const [workflows, setWorkflows] = useState([])
     const [workflowLoaded, setWorkflowLoaded] = useState(false)
@@ -60,7 +59,6 @@ export default function DashboardPageProject(props) {
     const getProjectName = () => {
         apiClient.type('projects').get(props.params.id)
         .then((project) => {
-            setProjectNameLoaded(true)
             setProjectName(project.display_name)
         })
     }
