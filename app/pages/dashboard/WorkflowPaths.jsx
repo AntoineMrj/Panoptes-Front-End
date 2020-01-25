@@ -22,7 +22,7 @@ export default function WorkflowPaths(props) {
                 let path = pathInfo[0]
                 let value = pathInfo[1]
                 if (!(path === "totalAnnotations")) {
-                    value = ((value / totalAnnotations) * 100).toFixed(2) + '%'
+                    value = ((value / totalAnnotations) * 100).toFixed(2) + ' %'
                     if (subjectTmp == subject_id) {
                         toDisplay.push(
                             <tr style={{backgroundColor: color}}>

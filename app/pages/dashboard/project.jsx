@@ -376,11 +376,11 @@ export default function DashboardPageProject(props) {
     }, [workflowLoaded])
 
     useEffect(() => {
+        setUsers([])
         retrieveTasks()
         var classifByWorkflow = getClassifByWorkflow()
         computeAnnotations(classifByWorkflow)
         setMeanTime(loadProjectInfo(classifByWorkflow))
-        setUsers([])
         workflowTasks = {}
     }, [currentWorkflow])
 
