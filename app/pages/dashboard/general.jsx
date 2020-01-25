@@ -34,6 +34,8 @@ function DashboardPageGeneral() {
   }
 
   useEffect(() => {
+    utils.getClassifications(1899)
+    .then(e => console.log(e))
     loadProjects()
   }, [])
 
