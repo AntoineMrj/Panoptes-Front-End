@@ -238,8 +238,8 @@ export default function DashboardPageProject(props) {
             }
             annotBySubject[subject].forEach(annot => {
                 annot.forEach(task => {
-                    var value = task.value.toString()
-                    var taskTitle = task.task
+                    let value = utils.checkForNull(task.value).toString()
+                    let taskTitle = task.task
                     if (value in subjectHashProba[subject][taskTitle]) {
                         subjectHashProba[subject][taskTitle][value] += 1
                     } else {
@@ -303,6 +303,7 @@ export default function DashboardPageProject(props) {
                 // Going over annotation and subjects
                 classif.annotations.forEach(annot => {
                     let { task, value } = annot
+                    value = utils.checkForNull(value)
                     let currentValue = subjectHashProba[classif.subjects][task][value.toString()]
                     let diffAnsTotal = subjectHashProba[classif.subjects][task].diffAnsTotal
                     scoreByUser[user_id][task] += currentValue / diffAnsTotal
@@ -377,11 +378,11 @@ export default function DashboardPageProject(props) {
 
     useEffect(() => {
         setUsers([])
+        workflowTasks = {}
         retrieveTasks()
         var classifByWorkflow = getClassifByWorkflow()
         computeAnnotations(classifByWorkflow)
         setMeanTime(loadProjectInfo(classifByWorkflow))
-        workflowTasks = {}
     }, [currentWorkflow])
 
     useEffect(() => {
