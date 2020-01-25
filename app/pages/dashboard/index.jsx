@@ -43,23 +43,14 @@ class DashboardPage extends React.Component {
                     to="/dashboard"
                     activeClassName="active"
                   >
-                    Général
+                    General
                   </IndexLink>
-                </li>
-                <li>
-                  <Link
-                    to="/dashboard/users"
-                    activeClassName="active"
-                    onClick={this.logClick ? this.logClick.bind(this, 'test') : null}
-                  >
-                    Users
-                  </Link>
                 </li>
                 <li style={liStyle}>
                   <Link
                     to={this.state.current}
                     activeClassName="active"
-                    onClick={this.logClick ? this.logClick.bind(this, 'getInvolved.index.nav.callForProjects') : null}
+                    onClick={this.logClick ? this.logClick.bind(this, 'projects') : null}
                   >
                     Project
                   </Link>

@@ -59,7 +59,6 @@ createReactClass = require 'create-react-class'
 `import DataExports from './pages/lab/data-exports';`
 `import DashboardPage from './pages/dashboard/index';`
 `import DashboardPageGeneral from './pages/dashboard/general';`
-`import DashboardPageUsers from './pages/dashboard/users';`
 `import DashboardPageProject from './pages/dashboard/project';`
 
 # <Redirect from="home" to="/" /> doesn't work.
@@ -296,10 +295,8 @@ module.exports =
 
     <Route path="dashboard" component={DashboardPage}>
         <IndexRoute component={DashboardPageGeneral} />
-        <Route path="users" component={DashboardPageUsers} />
         <Route path="project/:id" component={DashboardPageProject} />
     </Route>
 
-=
     <Route path="*" component={NotFoundPage} />
   </Route>
