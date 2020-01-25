@@ -22,6 +22,27 @@ const initialTableState = {
     rows: []
 }
 
+/*
+  &:hover
+    background: lighten(#F5F5F5, 20%)
+
+  &:active
+    background: #F5F5F5
+    border-color: SlateGrey
+*/
+
+const workflowButtonStyle = {
+    padding: "10px",
+    borderRadius: "2em",
+    display: "inline-block",
+    lineHeight: "1.2",
+    verticalAlign: "middle",
+    background: "white",
+    borderColor: "#e7e7e7",
+    marginLeft: "10px",
+    borderStyle: "solid"
+}
+
 const focusButtonStyle = {
     backgroundColor: "WhiteSmoke",
     borderColor: "SlateGrey",
@@ -240,7 +261,7 @@ export default function DashboardPageProject(props) {
         Object.entries(annotBySubject).forEach(entry => {
             let subject_id = entry[0]
             let annotations = entry[1]
-            paths[subject_id] = {}
+            paths[subject_id] = { totalAnnotations: annotations.length }
             annotations.forEach(annot => {
                 let concatAnnot = concatAnnotation(annot)
                 if (concatAnnot in paths[subject_id]) {
@@ -249,10 +270,6 @@ export default function DashboardPageProject(props) {
                     paths[subject_id][concatAnnot] = 1
                 }
             })
-            Object.values(paths[subject_id]).map(value =>
-                value = ((value / annotations.length) * 100).toFixed(2) + ' %'
-            )
-            console.log("paths[subject_id]: ", paths[subject_id])
         })
         setWorkflowPaths(paths)
     }
@@ -383,8 +400,7 @@ export default function DashboardPageProject(props) {
     const workflow_list = workflowLoaded ?
         workflows.map(workflow =>
             <button
-                //style={buttonStyle}
-                className="workflow-button"
+                style={workflowButtonStyle}
                 onClick={handleWorkflowClick}
                 name={workflow.id}
                 key={workflow.id}
@@ -403,17 +419,17 @@ export default function DashboardPageProject(props) {
 
     return (
         <div>
-            <h3>{projectName}</h3>
+            <h2>{projectName}</h2>
             <br/>
             {workflow_list}
             <br/>
-            <br/>
-            {paths_list}
             <ProjectInfo
                 projectInfo={projectInfo}
                 meanTime={meanTime}
                 feltDifficulty={feltDifficulty}
             />
+            <br/>
+            {paths_list}
             <br/>
             <DashboardTable
                 rows={rows}

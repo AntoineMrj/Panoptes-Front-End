@@ -16,26 +16,32 @@ export default function WorkflowPaths(props) {
             let subject_id = subject[0]
             let diffPaths = subject[1]
             let subjectTmp = ""
-            Object.entries(diffPaths).forEach(path => {
+            let totalAnnotations = diffPaths.totalAnnotations
+            Object.entries(diffPaths).forEach(pathInfo => {
                 let color = (colorNum % 2 == 0) ? "WhiteSmoke" : "white"
-                if (subjectTmp == subject_id) {
-                    toDisplay.push(
-                        <tr style={{backgroundColor: color}}>
-                            <td></td>
-                            <td>{path[0]}</td>
-                            <td>{path[1]}</td>
-                        </tr>
-                    )
-                } else {
-                    toDisplay.push(
-                        <tr style={{backgroundColor: color}}>
-                            <td>{subject_id}</td>
-                            <td>{path[0]}</td>
-                            <td>{path[1]}</td>
-                        </tr>
-                    )
+                let path = pathInfo[0]
+                let value = pathInfo[1]
+                if (!(path === "totalAnnotations")) {
+                    value = ((value / totalAnnotations) * 100).toFixed(2) + '%'
+                    if (subjectTmp == subject_id) {
+                        toDisplay.push(
+                            <tr style={{backgroundColor: color}}>
+                                <td></td>
+                                <td>{path}</td>
+                                <td>{value}</td>
+                            </tr>
+                        )
+                    } else {
+                        toDisplay.push(
+                            <tr style={{backgroundColor: color}}>
+                                <td>{subject_id}</td>
+                                <td>{path}</td>
+                                <td>{value}</td>
+                            </tr>
+                        )
+                    }
+                    subjectTmp = subject_id
                 }
-                subjectTmp = subject_id
             })
             colorNum += 1
         })
@@ -49,6 +55,7 @@ export default function WorkflowPaths(props) {
     return (
         <div>
             <h3>Workflow Paths per subject</h3>
+            <br/>
             <table style={tableStyle}>
                 <thead>
                     <tr style={{backgroundColor: "#e7e7e7"}}>
