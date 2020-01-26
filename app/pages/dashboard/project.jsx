@@ -329,7 +329,11 @@ export default function DashboardPageProject(props) {
                 let key = task[0]
                 let classifNum = Object.keys(annotByUser[user_id]).length
                 let value = (task[1] / classifNum) * 100
-                row[key] = (value.toFixed(2) + ' %')
+                if (value == 0) {
+                    row[key] = "n/a"
+                } else {
+                    row[key] = (value.toFixed(2) + ' %')
+                }
             })
             setRows(prevRows =>
                 [...(prevRows),
