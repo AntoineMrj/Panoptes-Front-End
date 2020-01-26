@@ -21,7 +21,7 @@ function UserToggleInfo(props) {
 
   useEffect(() => {
     usersLoaded ? setCurrentUser(users.filter(user => user.id == props.classifByUser[0].links.user)[0].display_name) : ''
-  }, [props])
+  }, [props, usersLoaded])
 
   /*
   * On component mount, fetch usernames given an id set and save them into users state
