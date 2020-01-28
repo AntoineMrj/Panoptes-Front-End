@@ -9,11 +9,6 @@ import WorkflowPaths from 'WorkflowPaths'
 import * as utils from './utils'
 import classificationsJson1899 from './data/classifications-projet-1899.json'
 
-const projectInfo = {
-    meanTime: 10,
-    meanGSscore: 6.8
-}
-
 const initialTableState = {
     columns: [
         { id: 'user', label: 'User', minWidth: 60 },
@@ -103,21 +98,6 @@ export default function DashboardPageProject(props) {
         setClassifications(classificationsJson1899.filter(classif =>
             classif.links.project === props.params.id
         ))
-    }
-
-    /*
-    * Returns all classifications of the current workflow
-    */
-    const getClassifByWorkflow = () => {
-        return classifications.filter(classif =>
-            classif.links.workflow === currentWorkflow
-        )
-    }
-
-    const getClassifByUser = (classifs) => {
-        return classifs.filter(classif =>
-            classif.links.user === selectedUser
-        )
     }
 
     /*
@@ -359,14 +339,14 @@ export default function DashboardPageProject(props) {
         workflowTasks = {}
         // Repopulating variables with current workflow selection
         retrieveTasks()
-        var classifByWorkflow = getClassifByWorkflow()
+        const classifByWorkflow = utils.getClassifByWorkflow(classifications, currentWorkflow)
         computeAnnotations(classifByWorkflow)
         setMeanTime(loadProjectInfo(classifByWorkflow))
     }, [currentWorkflow])
 
     useEffect(() => {
-        var classifByWorkflow = getClassifByWorkflow()
-        setClassifByUser(getClassifByUser(classifByWorkflow))
+        const classifByWorkflow = utils.getClassifByWorkflow(classifications, currentWorkflow)
+        setClassifByUser(utils.getClassifByUser(classifByWorkflow, selectedUser))
     }, [selectedUser])
 
     /*
@@ -403,7 +383,6 @@ export default function DashboardPageProject(props) {
             {workflow_list}
             <br/>
             <ProjectInfo
-                projectInfo={projectInfo}
                 meanTime={meanTime}
             />
             <br/>

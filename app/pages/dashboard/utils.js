@@ -7,14 +7,14 @@ import apiClient from 'panoptes-client/lib/api-client';
 * @returns {promise}
 */
 export function getProjects(query) {
-  return new Promise(function(resolve, reject) {
-    resolve(
-      apiClient.type('projects').get(query)
-      .then((projects) => {
-        return projects;
-      })
-    )
-  })
+    return new Promise(function(resolve, reject) {
+        resolve(
+            apiClient.type('projects').get(query)
+            .then((projects) => {
+                return projects;
+            })
+        )
+    })
 }
 
 /**
@@ -26,19 +26,19 @@ export function getProjects(query) {
 */
 export function getClassifications(page_id, project_id, result) {
     return apiClient.type('classifications/project').get({
-      project_id: project_id,
-      page_size: 100,
-      page:page_id
+        project_id: project_id,
+        page_size: 100,
+        page:page_id
     })
     .then((classifications) => {
-      if(classifications.length == 100){
-        result.push(classifications)
-        return getClassifications(page_id + 1, project_id, result)
-      }
-      else{
-        result.push(classifications)
-        return [].concat.apply([], result);
-      }
+        if(classifications.length == 100){
+            result.push(classifications)
+            return getClassifications(page_id + 1, project_id, result)
+        }
+        else{
+            result.push(classifications)
+            return [].concat.apply([], result);
+        }
     })
 }
 
@@ -49,7 +49,7 @@ export function getClassifications(page_id, project_id, result) {
 * @return {integer} Number of seconds between the 2 dates
 */
 export function diffTime(started_at, finished_at) {
-  return Math.ceil(Math.abs(finished_at - started_at)/1000);
+    return Math.ceil(Math.abs(finished_at - started_at)/1000);
 }
 
 /**
@@ -59,7 +59,7 @@ export function diffTime(started_at, finished_at) {
 * @return {object} Return the filtered classifications
 */
 export function extractClassifications(classifications, project_id) {
-  return classifications.filter(classifications => classifications.links.project == project_id)
+    return classifications.filter(classifications => classifications.links.project == project_id)
 }
 
 /**
@@ -68,16 +68,16 @@ export function extractClassifications(classifications, project_id) {
 * @returns {promise}
 */
 export function getUsername(user_id) {
-  return new Promise(function(resolve, reject) {
-    resolve(
-      apiClient.type('users').get({
-        id: user_id
-      })
-      .then((user) => {
-        return user;
-      })
-    )
-  })
+    return new Promise(function(resolve, reject) {
+        resolve(
+            apiClient.type('users').get({
+                id: user_id
+            })
+            .then((user) => {
+                return user;
+            })
+        )
+    })
 }
 
 /**
@@ -86,18 +86,18 @@ export function getUsername(user_id) {
 * @returns {array} array containing the different user ids
 */
 export function getUserIds(classifications) {
-  var lookup = {};
-  var result = [];
+    var lookup = {};
+    var result = [];
 
-  for (var item, i = 0; item = classifications[i++];) {
-    var id = item.links.user;
-    if (!(id in lookup)) {
-      lookup[id] = 1;
-      result.push(id);
+    for (var item, i = 0; item = classifications[i++];) {
+        var id = item.links.user;
+        if (!(id in lookup)) {
+            lookup[id] = 1;
+            result.push(id);
+        }
     }
-  }
 
-  return result
+    return result
 }
 
 /**
@@ -106,13 +106,29 @@ export function getUserIds(classifications) {
 * @return {number} Return the avegare time spent
 */
 export function computeTimeAverage(classifications) {
-  return classifications
-  .map((classification) => diffTime(new Date(classification.metadata.started_at), new Date(classification.metadata.finished_at)))
-  .reduce((acc, curr) => acc + curr) / classifications.length
+    return classifications
+    .map((classification) => diffTime(new Date(classification.metadata.started_at), new Date(classification.metadata.finished_at)))
+    .reduce((acc, curr) => acc + curr) / classifications.length
 }
 
 /*
 * Checinkg for null values
 */
 export const checkForNull = value =>
-        value === null ? "null" : value
+    value === null ? "null" : value
+
+/*
+* Returns all classifications of the current workflow
+*/
+export const getClassifByWorkflow = (classifs, workflow_id) =>
+    classifs.filter(classif =>
+        classif.links.workflow === workflow_id
+    )
+
+/*
+* Returns all classifications of a particular user
+*/
+export const getClassifByUser = (classifs, user_id) =>
+    classifs.filter(classif =>
+        classif.links.user === user_id
+    )
