@@ -1,14 +1,25 @@
 import React, {useState, useEffect} from 'react'
+import apiClient from 'panoptes-client/lib/api-client'
 
 const tableStyle = {
     textAlign: "center",
-    width: "50%"
+    width: "50%",
+    float: "left"
+}
+
+const imageStyle = {
+    width: "50%",
+    position: "relative"
 }
 
 export default function WorkflowPaths(props) {
 
     const [paths, setPaths] = useState([])
+    const [image, setImage] = useState("")
 
+    /*
+    * Displaying the workflow paths in a table
+    */
     const displayPaths = () => {
         var toDisplay = []
         let colorNum = 1
@@ -34,7 +45,10 @@ export default function WorkflowPaths(props) {
                     } else {
                         toDisplay.push(
                             <tr style={{backgroundColor: color}}>
-                                <td>{subject_id}</td>
+                                <td
+                                    onMouseOver={() => displayImage(subject_id)}
+                                    onMouseOut={() => setImage("")}
+                                >{subject_id}</td>
                                 <td>{path}</td>
                                 <td>{value}</td>
                             </tr>
@@ -46,6 +60,16 @@ export default function WorkflowPaths(props) {
             colorNum += 1
         })
         setPaths(toDisplay)
+    }
+
+    /*
+    * Calling the api to get the image src of the subject
+    */
+    const displayImage = (subject_id) => {
+        apiClient.type('subjects').get(subject_id)
+        .then((subject) => {
+            setImage(Object.values(subject.locations[0]))
+        })
     }
 
     useEffect(() => {
@@ -70,6 +94,7 @@ export default function WorkflowPaths(props) {
                     {paths}
                 </tbody>
             </table>
+            <img src={image} style={imageStyle} />
         </div>
     )
 

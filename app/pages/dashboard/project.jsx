@@ -11,7 +11,6 @@ import classificationsJson1899 from './data/classifications-projet-1899.json'
 
 const projectInfo = {
     meanTime: 10,
-    feltDifficulty: 3.2,
     meanGSscore: 6.8
 }
 
@@ -36,7 +35,6 @@ export default function DashboardPageProject(props) {
     const [classifLoaded, setClassifLoaded] = useState(false)
 
     const [meanTime, setMeanTime] = useState(-1)
-    const [feltDifficulty, setFeltDifficulty] = useState(-1)
 
     const [columns, setColumns] = useState(initialTableState.columns)
     const [rows, setRows] = useState(initialTableState.rows)
@@ -405,7 +403,6 @@ export default function DashboardPageProject(props) {
             <ProjectInfo
                 projectInfo={projectInfo}
                 meanTime={meanTime}
-                feltDifficulty={feltDifficulty}
             />
             <br/>
             {paths_list}
