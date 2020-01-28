@@ -40,7 +40,6 @@ export default function DashboardPageProject(props) {
     const [rows, setRows] = useState(initialTableState.rows)
 
     const [selectedUser, setSelectedUser] = useState()
-    const [isUserSelected, setIsUserSelected] = useState(false)
     const [classifByUser, setClassifByUser] = useState({})
     const [users, setUsers] = useState([])
 
@@ -353,8 +352,12 @@ export default function DashboardPageProject(props) {
     }, [workflowLoaded])
 
     useEffect(() => {
+        // Resetting variables after current workflow selection change
         setUsers([])
+        setSelectedUser()
+        setClassifByUser({})
         workflowTasks = {}
+        // Repopulating variables with current workflow selection
         retrieveTasks()
         var classifByWorkflow = getClassifByWorkflow()
         computeAnnotations(classifByWorkflow)
@@ -362,7 +365,6 @@ export default function DashboardPageProject(props) {
     }, [currentWorkflow])
 
     useEffect(() => {
-        setIsUserSelected(true)
         var classifByWorkflow = getClassifByWorkflow()
         setClassifByUser(getClassifByUser(classifByWorkflow))
     }, [selectedUser])
