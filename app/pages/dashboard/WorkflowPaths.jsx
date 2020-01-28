@@ -3,13 +3,11 @@ import apiClient from 'panoptes-client/lib/api-client'
 
 const tableStyle = {
     textAlign: "center",
-    width: "50%",
-    float: "left"
+    flex:"1",
 }
 
 const imageStyle = {
-    width: "50%",
-    position: "relative"
+    flex: "1",
 }
 
 export default function WorkflowPaths(props) {
@@ -44,11 +42,12 @@ export default function WorkflowPaths(props) {
                         )
                     } else {
                         toDisplay.push(
-                            <tr style={{backgroundColor: color}}>
-                                <td
-                                    onMouseOver={() => displayImage(subject_id)}
-                                    onMouseOut={() => setImage("")}
-                                >{subject_id}</td>
+                            <tr
+                                style={{backgroundColor: color}} 
+                                onMouseOver={() => displayImage(subject_id)}
+                                onMouseOut={() => setImage("")}
+                            >
+                                <td>{subject_id}</td>
                                 <td>{path}</td>
                                 <td>{value}</td>
                             </tr>
@@ -77,24 +76,29 @@ export default function WorkflowPaths(props) {
     }, [props])
 
     return (
-        <div>
-            <h3>Workflow Paths per subject</h3>
-            <br/>
-            <table style={tableStyle}>
-                <thead>
-                    <tr style={{backgroundColor: "#e7e7e7"}}>
-                        <th>Subject</th>
-                        <th>Path</th>
-                        <th>Times chosen</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                    </tr>
-                    {paths}
-                </tbody>
-            </table>
-            <img src={image} style={imageStyle} />
+        <div style={{display: "flex"}}>
+
+            <div style={tableStyle}>
+                <h3>Workflow Paths per subject</h3>
+                <br/>
+                <table style={{width: "100%"}}>
+                    <thead>
+                        <tr style={{backgroundColor: "#e7e7e7"}}>
+                            <th>Subject</th>
+                            <th>Path</th>
+                            <th>Times chosen</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                        </tr>
+                        {paths}
+                    </tbody>
+                </table>
+            </div>
+            <div style={imageStyle}>
+                <img src={image} style={{width: "100%"}}/>
+            </div>
         </div>
     )
 
