@@ -22,32 +22,6 @@ const initialTableState = {
     rows: []
 }
 
-/*
-  &:hover
-    background: lighten(#F5F5F5, 20%)
-
-  &:active
-    background: #F5F5F5
-    border-color: SlateGrey
-*/
-
-const workflowButtonStyle = {
-    padding: "10px",
-    borderRadius: "2em",
-    display: "inline-block",
-    lineHeight: "1.2",
-    verticalAlign: "middle",
-    background: "white",
-    borderColor: "#e7e7e7",
-    marginLeft: "10px",
-    borderStyle: "solid"
-}
-
-const focusButtonStyle = {
-    backgroundColor: "WhiteSmoke",
-    borderColor: "SlateGrey",
-}
-
 export default function DashboardPageProject(props) {
 
     const [projectName, setProjectName] = useState('Loading...')
@@ -405,7 +379,7 @@ export default function DashboardPageProject(props) {
     const workflow_list = workflowLoaded ?
         workflows.map(workflow =>
             <button
-                style={workflowButtonStyle}
+                className={currentWorkflow === workflow.id ? 'about-tabs active' : 'about-tabs'}
                 onClick={handleWorkflowClick}
                 name={workflow.id}
                 key={workflow.id}
