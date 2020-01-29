@@ -25,6 +25,7 @@ export default function DashboardPageProject(props) {
     const [workflows, setWorkflows] = useState([])
     const [workflowLoaded, setWorkflowLoaded] = useState(false)
     const [currentWorkflow, setCurrentWorkflow] = useState(-1)
+    const [tasksType, setTasksType] = useState({})
 
     const [classifications, setClassifications] = useState([])
     const [classifLoaded, setClassifLoaded] = useState(false)
@@ -109,12 +110,10 @@ export default function DashboardPageProject(props) {
             workflows.forEach(workflow => {
                 // We check the current workflow
                 if (workflow.id === currentWorkflow) {
-
                     Object.entries(workflow.tasks).forEach(entry => {
                         let key = entry[0]
                         let value = entry[1]
                         workflowTasks[key] = value.type
-                        //tasks.push(task)
                         setColumns(prevColumns =>
                             [...(prevColumns), {
                                 id: key,
@@ -125,6 +124,7 @@ export default function DashboardPageProject(props) {
                             }]
                         )
                     })
+                    setTasksType(workflowTasks)
                 }
             })
         }
@@ -295,21 +295,6 @@ export default function DashboardPageProject(props) {
     }
 
     /*
-    * Hashing annotations - NOT USED
-    */
-    const hashAnnotations = (annotations) => {
-        var result = ""
-        annotations.forEach(annot => {
-            if (workflowTasks[annot.task] === 'drawing') {
-                // TODO: Compare drawings
-            } else {
-                result += annot.value
-            }
-        })
-        return result
-    }
-
-    /*
     * Callback that gets the selected user in the DashboardTable component
     */
     const getSelectedUser = (user) => {
@@ -325,10 +310,9 @@ export default function DashboardPageProject(props) {
 
     useEffect(() => {
         // Loading tasks of the first workflow
-        if (workflows.length > 0) {
+        if (workflowLoaded) {
             setCurrentWorkflow(workflows[0].id)
             retrieveTasks()
-            console.log(workflowTasks)
         }
     }, [workflowLoaded])
 
@@ -340,7 +324,6 @@ export default function DashboardPageProject(props) {
         workflowTasks = {}
         // Repopulating variables with current workflow selection
         retrieveTasks()
-        console.log(workflowTasks)
         const classifByWorkflow = utils.getClassifByWorkflow(classifications, currentWorkflow)
         computeAnnotations(classifByWorkflow)
         setMeanTime(loadProjectInfo(classifByWorkflow))
@@ -375,7 +358,7 @@ export default function DashboardPageProject(props) {
         "Loading paths..."
 
     const userInfo = Object.keys(classifByUser).length !== 0 ?
-        (<UserToggleInfo classifByUser={classifByUser} users={users} workflowTasks={workflowTasks} />) :
+        (<UserToggleInfo classifByUser={classifByUser} users={users} workflowTasks={tasksType} />) :
         ""
 
     return (
