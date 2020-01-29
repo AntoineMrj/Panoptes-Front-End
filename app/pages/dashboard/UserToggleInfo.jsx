@@ -19,6 +19,23 @@ function UserToggleInfo(props) {
   const [users, setUsers] = useState([])
   const [usersLoaded, setUsersLoaded] = useState(false)
 
+  /*
+  * Hashing annotations - NOT USED
+  */
+  const hashAnnotations = (annotations) => {
+      var result = ""
+      annotations.forEach(annot => {
+          console.log(annot)
+          if (workflowTasks[annot.task] === 'drawing') {
+              // TODO: Compare drawings
+              console.log(workflowTasks[annot.task])
+          } else {
+              result += annot.value
+          }
+      })
+      return result
+  }
+
   useEffect(() => {
     usersLoaded ? setCurrentUser(users.filter(user => user.id == props.classifByUser[0].links.user)[0].display_name) : ''
   }, [props, usersLoaded])
@@ -61,6 +78,8 @@ function UserToggleInfo(props) {
     </div>
   )
   : ''
+
+  console.log(props)
 
   return(
     <div style={toggleInfoStyle}>

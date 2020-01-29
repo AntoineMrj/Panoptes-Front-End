@@ -328,6 +328,7 @@ export default function DashboardPageProject(props) {
         if (workflows.length > 0) {
             setCurrentWorkflow(workflows[0].id)
             retrieveTasks()
+            console.log(workflowTasks)
         }
     }, [workflowLoaded])
 
@@ -339,6 +340,7 @@ export default function DashboardPageProject(props) {
         workflowTasks = {}
         // Repopulating variables with current workflow selection
         retrieveTasks()
+        console.log(workflowTasks)
         const classifByWorkflow = utils.getClassifByWorkflow(classifications, currentWorkflow)
         computeAnnotations(classifByWorkflow)
         setMeanTime(loadProjectInfo(classifByWorkflow))
@@ -373,7 +375,7 @@ export default function DashboardPageProject(props) {
         "Loading paths..."
 
     const userInfo = Object.keys(classifByUser).length !== 0 ?
-        (<UserToggleInfo classifByUser={classifByUser} users={users} />) :
+        (<UserToggleInfo classifByUser={classifByUser} users={users} workflowTasks={workflowTasks} />) :
         ""
 
     return (

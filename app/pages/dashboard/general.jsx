@@ -34,14 +34,14 @@ function DashboardPageGeneral() {
   }
 
   useEffect(() => {
-    apiClient.type('classifications/project/gold_standard').get({
+    /*apiClient.type('classifications/project/gold_standard').get({
       project_id: 1899,
       page_size: 100,
       page:1
     })
     .then((user) => {
       console.log(user);
-    })
+  })*%*/
     utils.getClassifications(1, 1899, [])
     .then(e => console.log(e))
     loadProjects()
