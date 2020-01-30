@@ -13,10 +13,6 @@ const toggleInfoStyle = {
     borderColor: "SlateGrey",
 }
 
-const imageStyle = {
-    width: '200px'
-}
-
 function UserToggleInfo(props) {
     const [currentUser, setCurrentUser] = useState('')
     const [users, setUsers] = useState([])
@@ -79,6 +75,31 @@ function UserToggleInfo(props) {
     }
 
     /*
+    * Build img content with cropping
+    */
+    const getImgDisplay = (subject, dimensions) => {
+        var res =
+            <div style={{
+                width: parseInt(dimensions.width),
+                height: parseInt(dimensions.height),
+                overflow: "hidden",
+                borderRadius: "5px",
+                margin: "0"}}
+            >
+                <img
+                    style={{
+                        display:"block",
+                        margin: "-" + parseInt(dimensions.y) + "px -" + parseInt(dimensions.x) + "px",
+                    }}
+                    src={subject}
+                    alt="test"
+                />
+            </div>
+
+        return res
+    }
+
+    /*
     * Builds <li> display of annotations
     */
     const displayAnnotations = (classif, classif_id) => {
@@ -86,8 +107,8 @@ function UserToggleInfo(props) {
         .filter(classif => classif.classif_id == classif_id)
         .map(data => {
             return data.annotations.map(annotation => {
-                if (props.workflowTasks[annotation.task] === "drawing") {
-                    return <div>{annotation.task}<img style={imageStyle} src={data.subject} alt="test" /></div>
+                if (props.workflowTasks[annotation.task] === "drawing" && annotation.value.length != 0) {
+                    return <div>{annotation.task} : {getImgDisplay(data.subject, annotation.value[0])}</div>
                 }
                 else {
                     return <div>{annotation.task} : {utils.checkForNull(annotation.value).toString()}</div>
@@ -101,26 +122,26 @@ function UserToggleInfo(props) {
     */
     const classifDetails = users.length != 0 ? props.classifByUser.map(classif =>
         <div>
-            <h4>Classif n°{classif.id} ({utils.diffTime(new Date(classif.metadata.started_at), new Date(classif.metadata.finished_at))} secondes)</h4>
-            <ul>
-            {
-                <li style={{listStyleType: 'none'}}>
-                {classifData.length !=0 ? displayAnnotations(classifData, classif.id) : ''}
-                </li>
-            }
-            </ul>
+        <h4>Classif n°{classif.id} ({utils.diffTime(new Date(classif.metadata.started_at), new Date(classif.metadata.finished_at))} secondes)</h4>
+        <ul>
+        {
+            <li style={{listStyleType: 'none'}}>
+            {classifData.length !=0 ? displayAnnotations(classifData, classif.id) : ''}
+            </li>
+        }
+        </ul>
         </div>
     )
     : ''
 
     return(
         <div style={toggleInfoStyle}>
-            <h3 style={{fontSize: '20px'}}><img src={infoLogo} /> {currentUser} informations :</h3><br/>
-            <BigNumber number={utils.computeTimeAverage(props.classifByUser).toFixed(2) + "s"} text=" average resolution time of the workflow"/>
-            <BigNumber number={props.classifByUser.length.toString()} text=" classifications done for this workflow"/>
-            <br/>
-            <h4 style={{fontSize: '18px'}}>Classifications details :</h4><br/>
-            {classifDetails}
+        <h3 style={{fontSize: '20px'}}><img src={infoLogo} /> {currentUser} information :</h3><br/>
+        <BigNumber number={utils.computeTimeAverage(props.classifByUser).toFixed(2) + "s"} text=" average resolution time of the workflow"/>
+        <BigNumber number={props.classifByUser.length.toString()} text=" classifications done for this workflow"/>
+        <br/>
+        <h4 style={{fontSize: '18px'}}>Classifications details :</h4><br/>
+        {classifDetails}
         </div>
     )
 }
