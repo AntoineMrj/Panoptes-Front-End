@@ -17,6 +17,7 @@ function UserToggleInfo(props) {
     const [currentUser, setCurrentUser] = useState('')
     const [users, setUsers] = useState([])
     const [classifData , setClassifData] = useState([])
+    const [currentImage, setCurrentImage] = useState('')
 
     /*
     * On props change and when user loaded, set selected username
@@ -75,26 +76,43 @@ function UserToggleInfo(props) {
     }
 
     /*
+    * Handle image display on click
+    */
+    const handleClick = (subject) => {
+        if(subject == currentImage){
+            setCurrentImage('')
+        }
+        else{
+            setCurrentImage(subject)
+        }
+    }
+
+    /*
     * Build img content with cropping
     */
     const getImgDisplay = (subject, dimensions) => {
         var res =
+        <div style={{display: "inline"}}>
+            <button onClick={() => handleClick(subject)}>{currentImage == subject ? "Hide image" : "Display image"}</button>
             <div style={{
+                display: currentImage == subject ? "block" : "none",
                 width: parseInt(dimensions.width),
                 height: parseInt(dimensions.height),
                 overflow: "hidden",
                 borderRadius: "5px",
                 margin: "0"}}
             >
+
                 <img
                     style={{
-                        display:"block",
+                        display: "block",
                         margin: "-" + parseInt(dimensions.y) + "px -" + parseInt(dimensions.x) + "px",
                     }}
                     src={subject}
                     alt="test"
                 />
             </div>
+        </div>
 
         return res
     }
