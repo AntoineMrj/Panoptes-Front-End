@@ -43,7 +43,7 @@ export default function WorkflowPaths(props) {
                     } else {
                         toDisplay.push(
                             <tr
-                                style={{backgroundColor: color}} 
+                                style={{backgroundColor: color}}
                                 onMouseOver={() => displayImage(subject_id)}
                                 onMouseOut={() => setImage("")}
                             >

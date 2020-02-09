@@ -57,9 +57,9 @@ createReactClass = require 'create-react-class'
 `import DevClassifierPage from './pages/dev-classifier';`
 `import Resources from './pages/about/resources-page';`
 `import DataExports from './pages/lab/data-exports';`
-`import DashboardPage from './pages/dashboard/index';`
-`import DashboardPageGeneral from './pages/dashboard/general';`
-`import DashboardPageProject from './pages/dashboard/project';`
+`import DashboardPage from './pages/dashboard/dashboard-page';`
+`import DashboardPageGeneral from './pages/dashboard/dashboard-page-general';`
+`import DashboardPageProject from './pages/dashboard/dashboard-page-project';`
 
 # <Redirect from="home" to="/" /> doesn't work.
 ONE_UP_REDIRECT = createReactClass

@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import BigNumber from './BigNumber'
+import BigNumber from './big-number'
 
 export default function ProjectInfo(props) {
     return (

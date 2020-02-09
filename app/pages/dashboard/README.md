@@ -12,7 +12,7 @@ The front-end is connected to the staging back-end of Panoptes. So, an account n
 
 ## Development
 
-All the different components we developed and use are located at the root of the dashboard directory. The "root" component of the dashboard is the one called **DashboardPageGeneral** in `general.jsx`. His goal is to display a list of project whose click leads to the main component **DashboardPageProject** in `project.jsx` where all the computations are made regarding user's score.
+All the different components we developed and use are located at the root of the dashboard directory. The "root" component of the dashboard is the one called **DashboardPage** in `dashboard-page.jsx`. His goal is to display all the content present on each page of the website as well as the **DashboardPageGeneral** component in `dashboard-page-general.jsx` which displays a list of projects whose click leads to the main component **DashboardPageProject** in `dashboard-page-project.jsx` where all the computations are made regarding users' scores.
 
 A script with useful functions about calls to the
 [API](https://panoptes.docs.apiary.io/ "Panoptes API") and filters on classifications especially is available in the directory as well in `utils.js`.
