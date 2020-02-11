@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import apiClient from 'panoptes-client/lib/api-client'
 import * as utils from './utils'
 
-import BigNumber from './BigNumber'
+import BigNumber from './big-number'
 import infoLogo from './img/info.png'
 
 const toggleInfoStyle = {

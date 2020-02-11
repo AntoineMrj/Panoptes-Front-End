@@ -19,7 +19,7 @@ const useStyles = makeStyles({
     },
 });
 
-function DashboardTable(props) {
+export default function DashboardTable(props) {
 
     const rows = props.rows
     const columns = props.columns
@@ -106,5 +106,3 @@ function DashboardTable(props) {
     );
 
 }
-
-export default DashboardTable

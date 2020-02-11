@@ -1,10 +1,10 @@
 import React, {useState, useEffect} from 'react'
 import apiClient from 'panoptes-client/lib/api-client'
 
-import DashboardTable from 'DashboardTable'
-import ProjectInfo from 'ProjectInfo'
-import UserToggleInfo from 'UserToggleInfo'
-import WorkflowPaths from 'WorkflowPaths'
+import DashboardTable from './dashboard-table'
+import ProjectInfo from './project-info'
+import UserToggleInfo from './user-toggle-info'
+import WorkflowPaths from './workflow-paths'
 
 import * as utils from './utils'
 import classificationsJson1899 from './data/classifications-projet-1899.json'
