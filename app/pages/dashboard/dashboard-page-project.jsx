@@ -82,8 +82,10 @@ export default function DashboardPageProject(props) {
     */
     const loadClassifications = () => {
         const query = {
-            project_id: props.params.id
+            project_id: props.params.id,
         }
+
+        //utils.getClassifications(1, props.params.id, [])
 
         apiClient.type('classifications').get(query)
         .then((classifs) => {
