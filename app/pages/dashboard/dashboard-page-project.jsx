@@ -45,6 +45,9 @@ export default function DashboardPageProject(props) {
     // Object containing tasks of the workflow with their type
     var workflowTasks = {}
 
+    // Object containing the classifications after the API call
+    var loadedClassifications = {}
+
     /*
     * Setting the projectName state given the id
     */
@@ -85,9 +88,8 @@ export default function DashboardPageProject(props) {
         console.log('aller la')
         utils.getClassifications(1, props.params.id, [])
         .then((classifs) => {
-            setClassifications(classifs)
+            loadedClassifications = classifs
             setClassifLoaded(true)
-            console.log('classifs:', classifications)
         })
     }
 
@@ -306,6 +308,13 @@ export default function DashboardPageProject(props) {
         loadClassifications()
         //loadClassificationsJson()
     }, [])
+
+    useEffect(() => {
+        if (classifLoaded) {
+            setClassifications(loadedClassifications)
+            console.log('loadedClassifications:', loadedClassifications)
+        }
+    }, [classifLoaded])
 
     useEffect(() => {
         // Loading tasks of the first workflow
