@@ -58,6 +58,10 @@ export default function DashboardTable(props) {
 
     return (
         <div>
+        <p>
+            Percentages represents the average answer for each user compared to the others,
+            e.g : a percentage of X% means that the user answered to the corresponding task like X% of the others. 
+        </p>
             <Paper className={classes.root}>
               <TableContainer className={classes.container}>
                 <Table stickyHeader aria-label="sticky table">

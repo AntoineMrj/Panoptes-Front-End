@@ -25,20 +25,24 @@ export function getProjects(query) {
 * @returns {promise}
 */
 export function getClassifications(page_id, project_id, result) {
-    return apiClient.type('classifications/project').get({
-        project_id: project_id,
-        page_size: 100,
-        page:page_id
-    })
-    .then((classifications) => {
-        if(classifications.length == 100){
-            result.push(classifications)
-            return getClassifications(page_id + 1, project_id, result)
-        }
-        else{
-            result.push(classifications)
-            return [].concat.apply([], result);
-        }
+    return new Promise(function(resolve, reject) {
+        resolve(
+            apiClient.type('classifications/project').get({
+                project_id: project_id,
+                page_size: 100,
+                page:page_id
+            })
+            .then((classifications) => {
+                if(classifications.length == 100){
+                    result.push(classifications)
+                    return getClassifications(page_id + 1, project_id, result)
+                }
+                else{
+                    result.push(classifications)
+                    return [].concat.apply([], result);
+                }
+            })
+        )
     })
 }
 

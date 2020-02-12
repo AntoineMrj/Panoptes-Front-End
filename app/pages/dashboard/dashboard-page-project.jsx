@@ -1,3 +1,4 @@
+
 import React, {useState, useEffect} from 'react'
 import apiClient from 'panoptes-client/lib/api-client'
 
@@ -81,16 +82,12 @@ export default function DashboardPageProject(props) {
     * Loading the classifications of the current project
     */
     const loadClassifications = () => {
-        const query = {
-            project_id: props.params.id,
-        }
-
-        //utils.getClassifications(1, props.params.id, [])
-
-        apiClient.type('classifications').get(query)
+        console.log('aller la')
+        utils.getClassifications(1, props.params.id, [])
         .then((classifs) => {
             setClassifications(classifs)
             setClassifLoaded(true)
+            console.log('classifs:', classifications)
         })
     }
 
@@ -306,8 +303,8 @@ export default function DashboardPageProject(props) {
     useEffect(() => {
         getProjectName()
         loadWorkflows()
-        //loadClassifications()
-        loadClassificationsJson()
+        loadClassifications()
+        //loadClassificationsJson()
     }, [])
 
     useEffect(() => {
@@ -374,6 +371,8 @@ export default function DashboardPageProject(props) {
             />
             <br/>
             {paths_list}
+            <br/>
+            {classifLoaded ? '' : "Loading classifications..."}
             <br/>
             <DashboardTable
                 rows={rows}
