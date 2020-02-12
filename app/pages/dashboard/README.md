@@ -25,3 +25,5 @@ A script with useful functions about calls to the
 
 ### Limitations
 We were unable to fetch gold standards classifications. We tried to call the dedicated endpoint explained in Panoptes [documentation](https://panoptes.docs.apiary.io/#reference/classification/classification-collection/list-all-classifications) but without results.
+
+For some reason, on refresh on project page, the API throw an error (so data is loaded when coming from project list page). 

@@ -24,12 +24,10 @@ export default function DashboardPageProject(props) {
     const [workflowPaths, setWorkflowPaths] = useState({})
 
     const [workflows, setWorkflows] = useState([])
-    const [workflowLoaded, setWorkflowLoaded] = useState(false)
     const [currentWorkflow, setCurrentWorkflow] = useState(-1)
     const [tasksType, setTasksType] = useState({})
 
     const [classifications, setClassifications] = useState([])
-    const [classifLoaded, setClassifLoaded] = useState(false)
 
     const [meanTime, setMeanTime] = useState(-1)
 
@@ -44,9 +42,6 @@ export default function DashboardPageProject(props) {
 
     // Object containing tasks of the workflow with their type
     var workflowTasks = {}
-
-    // Object containing the classifications after the API call
-    var loadedClassifications = {}
 
     /*
     * Setting the projectName state given the id
@@ -77,7 +72,6 @@ export default function DashboardPageProject(props) {
         apiClient.type('workflows').get(query)
         .then((workflows) => {
             setWorkflows(workflows)
-            setWorkflowLoaded(true)
         })
     }
 
@@ -85,11 +79,9 @@ export default function DashboardPageProject(props) {
     * Loading the classifications of the current project
     */
     const loadClassifications = () => {
-        console.log('aller la')
         utils.getClassifications(1, props.params.id, [])
         .then((classifs) => {
-            loadedClassifications = classifs
-            setClassifLoaded(true)
+            setClassifications(classifs)
         })
     }
 
@@ -106,7 +98,7 @@ export default function DashboardPageProject(props) {
     * Retrieving all tasks of the current workflow
     */
     const retrieveTasks = () => {
-        if (workflowLoaded) {
+        if (workflows.length != 0) {
             clearTableState()
             workflows.forEach(workflow => {
                 // We check the current workflow
@@ -310,19 +302,12 @@ export default function DashboardPageProject(props) {
     }, [])
 
     useEffect(() => {
-        if (classifLoaded) {
-            setClassifications(loadedClassifications)
-            console.log('loadedClassifications:', loadedClassifications)
-        }
-    }, [classifLoaded])
-
-    useEffect(() => {
         // Loading tasks of the first workflow
-        if (workflowLoaded) {
+        if (workflows.length != 0 && classifications.length != 0) {
             setCurrentWorkflow(workflows[0].id)
             retrieveTasks()
         }
-    }, [workflowLoaded])
+    }, [workflows, classifications])
 
     useEffect(() => {
         // Resetting variables after current workflow selection change
@@ -349,7 +334,7 @@ export default function DashboardPageProject(props) {
         setCurrentWorkflow(event.target.name)
     }
 
-    const workflow_list = workflowLoaded ?
+    const workflow_list = workflows.length != 0 ?
         workflows.map(workflow =>
             <button
                 className={currentWorkflow === workflow.id ? 'about-tabs active' : 'about-tabs'}
@@ -381,7 +366,7 @@ export default function DashboardPageProject(props) {
             <br/>
             {paths_list}
             <br/>
-            {classifLoaded ? '' : "Loading classifications..."}
+            {classifications.length != 0 ? '' : "Loading classifications..."}
             <br/>
             <DashboardTable
                 rows={rows}
